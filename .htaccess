@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	# http://localhost/<Path>
+	RewriteBase /pu/
+	
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?/$1 [L]
+</IfModule>
+
+#####################################################
+# CONFIGURE media caching
+#
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
+Header set Expires "Fri, 28 Dec 2050 20:00:00 GMT"
+Header unset ETag
+FileETag None
+</FilesMatch>
+
+<IfModule mod_deflate.c>
+<FilesMatch "\.(js|css|php|html)$">
+SetOutputFilter DEFLATE
+</FilesMatch>
+</IfModule>
+#
+#####################################################
