@@ -22,7 +22,7 @@ $apiConfig = array(
     'use_objects' => false,
   
     // The application_name is included in the User-Agent HTTP header.
-    'application_name' => '',
+    'application_name' => 'Project Uninoids',
 
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '532131737975-n5u9o66sf7v7th00l7l62dmktn95ganu.apps.googleusercontent.com',
@@ -77,6 +77,10 @@ $apiConfig = array(
               'https://www.googleapis.com/auth/latitude.all.city',
           )
       ),
+	  'drive' => array(
+	  	  'scope' => 'https://www.googleapis.com/auth/drive',
+	  	  'scope' => 'https://www.googleapis.com/auth/drive.file',
+		  ),
       'moderator' => array('scope' => 'https://www.googleapis.com/auth/moderator'),
       'oauth2' => array(
           'scope' => array(

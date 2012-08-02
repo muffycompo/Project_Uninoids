@@ -51,6 +51,99 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	
+	public function study(){
+		global $client;
+		//global $oauth2Service;
+		global $drive;
+		$session_token = $this->session->userdata('token');
+		if (isset($session_token)) {
+			$client->setAccessToken($session_token);
+			if($client->getAccessToken()){
+					// Do some API calls passing the json_decoded callback string
+					$v_data['google_drive'] = $drive;
+					$v_data['layout'] = 'study_v';
+					$this->load->view('layout/layout', $v_data);	
+				}
+		}
+	}
+	
+	
+	// Drive Stuff
+	public function create_file(){
+		global $client;
+		$session_token = $this->session->userdata('token');
+		if (isset($session_token)) {
+			$client->setAccessToken($session_token);
+			if($client->getAccessToken()){
+					$v_data['layout'] = 'create_file_v';
+					$this->load->view('layout/layout', $v_data);	
+				}
+		}		
+	}
+	
+	public function new_file(){
+		global $client;
+		global $drive;
+		$session_token = $this->session->userdata('token');
+		if (isset($session_token)) {
+			$client->setAccessToken($session_token);
+			if($client->getAccessToken()){
+					// Create File
+					$file_details = array(
+						'title' => $this->input->post('file_name') . '.' . $this->input->post('file_ext'),
+						'description' => $this->input->post('file_description'),
+						'content' => $this->input->post('file_body'),
+						'parentId' => NULL
+					);
+				
+					$new_file = $this->_save_file($file_details);
+					
+					echo '<pre>';
+					var_dump($new_file);
+					echo '</pre>';
+					
+				}
+		}	
+	}
+	
+	public function _save_file($inputFile){
+		global $client;
+		global $oauth2Service;
+		global $drive;
+		
+		try {
+		    $mimeType = 'text/plain';
+		    $newfile = new DriveFile();
+		    $newfile->setTitle($inputFile['title']);
+		    $newfile->setDescription($inputFile['description']);
+		    $newfile->setMimeType($mimeType);
+			
+		    // Set the parent folder.
+		    if ($inputFile['parentId'] != null) {
+		      	$parent = new ParentReference();
+			    $parent->setId($inputFile['parentId']);
+			    $newfile->setParents(array($parent));
+		    }
+
+		    /*$createdFile = $drive->files->insert($newfile, array(
+		        'data' => $inputFile['content'],
+		        'mimeType' => $mimeType,
+		    ));*/
+			
+			/*$createdFile = $drive->files->get('0B4UhGn_nBQFlNWYyZm94LUJvRTQ');*/
+			
+			/*$createdFile = $drive->files->update('0B4UhGn_nBQFlNWYyZm94LUJvRTQ',$newfile, array(
+		        'data' => $inputFile['content'],
+		        'mimeType' => $mimeType,
+		    ));*/
+			
+		    return $createdFile;
+		  } catch (apiServiceException $e) {
+		    error_log('Error creating a new file on Drive: ' . $e->getMessage(), 0);
+		    throw $e;
+		  }	
+	}
+	
 	public function logout(){
 		global $client;	
 	

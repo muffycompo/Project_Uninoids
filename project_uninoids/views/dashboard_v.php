@@ -4,7 +4,7 @@
 	<div id="body">
 		<?php //var_dump($user_details, true); ?>
 		<p><?php echo anchor('dashboard/profile','Profile') ?></p>
-		<p><?php echo anchor('','Study Materials') ?></p>
+		<p><?php echo anchor('dashboard/study','Study Materials') ?></p>
 		<p><?php echo anchor('','Assessment (Skill Based)') ?></p>
 		<p><?php echo anchor('','Grades') ?></p>
 		<p><?php echo anchor('','Certificates') ?></p>

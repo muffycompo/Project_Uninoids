@@ -1,7 +1,5 @@
 <?php
 /*
- * Copyright (c) 2010 Google Inc.
- *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
@@ -14,10 +12,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-require_once 'service/apiModel.php';
-require_once 'service/apiService.php';
-require_once 'service/apiServiceRequest.php';
 
 
   /**
@@ -458,26 +452,6 @@ require_once 'service/apiServiceRequest.php';
 
 
     /**
-     * Resets a specialized instance of a recurring event to its original state. (events.reset)
-     *
-     * @param string $calendarId Calendar identifier.
-     * @param string $eventId Event identifier.
-     * @param array $optParams Optional parameters. Valid optional parameters are listed below.
-     *
-     * @opt_param bool sendNotifications Whether to send notifications about the event update. Optional. The default is False.
-     * @return Event
-     */
-    public function reset($calendarId, $eventId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId);
-      $params = array_merge($params, $optParams);
-      $data = $this->__call('reset', array($params));
-      if ($this->useObjects()) {
-        return new Event($data);
-      } else {
-        return $data;
-      }
-    }
-    /**
      * Creates an event. (events.insert)
      *
      * @param string $calendarId Calendar identifier.
@@ -505,6 +479,7 @@ require_once 'service/apiServiceRequest.php';
      * @param array $optParams Optional parameters. Valid optional parameters are listed below.
      *
      * @opt_param string timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
+     * @opt_param bool alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
      * @opt_param int maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
      * @return Event
      */
@@ -551,6 +526,7 @@ require_once 'service/apiServiceRequest.php';
      * @opt_param string iCalUID Specifies iCalendar UID (iCalUID) of events to be included in the response. Optional.
      * @opt_param string updatedMin Lower bound for an event's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.
      * @opt_param bool singleEvents Whether to expand recurring events into instances and only return single one-off events and instances of recurring events, but not the underlying recurring events themselves. Optional. The default is False.
+     * @opt_param bool alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
      * @opt_param int maxResults Maximum number of events returned on one result page. Optional.
      * @opt_param string q Free text search terms to find events that match these terms in any field, except for extended properties. Optional.
      * @opt_param string pageToken Token specifying which result page to return. Optional.
@@ -578,6 +554,7 @@ require_once 'service/apiServiceRequest.php';
      * @param Event $postBody
      * @param array $optParams Optional parameters. Valid optional parameters are listed below.
      *
+     * @opt_param bool alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
      * @opt_param bool sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
      * @return Event
      */
@@ -599,6 +576,7 @@ require_once 'service/apiServiceRequest.php';
      * @param Event $postBody
      * @param array $optParams Optional parameters. Valid optional parameters are listed below.
      *
+     * @opt_param bool alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
      * @opt_param bool sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
      * @return Event
      */
@@ -620,6 +598,7 @@ require_once 'service/apiServiceRequest.php';
      * @param array $optParams Optional parameters. Valid optional parameters are listed below.
      *
      * @opt_param bool showDeleted Whether to include deleted events (with 'eventStatus' equals 'cancelled') in the result. Optional. The default is False.
+     * @opt_param bool alwaysIncludeEmail Whether to always include a value in the "email" field for the organizer, creator and attendees, even if no real email is available (i.e. a generated, non-working value will be provided). The use of this option is discouraged and should only be used by clients which cannot handle the absence of an email address value in the mentioned places. Optional. The default is False.
      * @opt_param int maxResults Maximum number of events returned on one result page. Optional.
      * @opt_param string pageToken Token specifying which result page to return. Optional.
      * @opt_param string timeZone Time zone used in the response. Optional. The default is the time zone of the calendar.
@@ -691,8 +670,6 @@ require_once 'service/apiServiceRequest.php';
     }
   }
 
-
-
 /**
  * Service definition for Calendar (v3).
  *
@@ -721,7 +698,6 @@ class apiCalendarService extends apiService {
    * @param apiClient apiClient
    */
   public function __construct(apiClient $apiClient) {
-    $this->rpcPath = '/rpc';
     $this->restBasePath = '/calendar/v3/';
     $this->version = 'v3';
     $this->serviceName = 'calendar';
@@ -731,9 +707,10 @@ class apiCalendarService extends apiService {
     $this->settings = new SettingsServiceResource($this, $this->serviceName, 'settings', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "id": "calendar.settings.list", "httpMethod": "GET", "path": "users/me/settings", "response": {"$ref": "Settings"}}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"setting": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.settings.get", "httpMethod": "GET", "path": "users/me/settings/{setting}", "response": {"$ref": "Setting"}}}}', true));
     $this->calendarList = new CalendarListServiceResource($this, $this->serviceName, 'calendarList', json_decode('{"methods": {"insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "request": {"$ref": "CalendarListEntry"}, "response": {"$ref": "CalendarListEntry"}, "httpMethod": "POST", "path": "users/me/calendarList", "id": "calendar.calendarList.insert"}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.calendarList.get", "httpMethod": "GET", "path": "users/me/calendarList/{calendarId}", "response": {"$ref": "CalendarListEntry"}}, "list": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"pageToken": {"type": "string", "location": "query"}, "showHidden": {"type": "boolean", "location": "query"}, "maxResults": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}, "minAccessRole": {"enum": ["freeBusyReader", "owner", "reader", "writer"], "type": "string", "location": "query"}}, "response": {"$ref": "CalendarList"}, "httpMethod": "GET", "path": "users/me/calendarList", "id": "calendar.calendarList.list"}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "CalendarListEntry"}, "id": "calendar.calendarList.update", "httpMethod": "PUT", "path": "users/me/calendarList/{calendarId}", "response": {"$ref": "CalendarListEntry"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "CalendarListEntry"}, "id": "calendar.calendarList.patch", "httpMethod": "PATCH", "path": "users/me/calendarList/{calendarId}", "response": {"$ref": "CalendarListEntry"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "DELETE", "path": "users/me/calendarList/{calendarId}", "id": "calendar.calendarList.delete"}}}', true));
     $this->calendars = new CalendarsServiceResource($this, $this->serviceName, 'calendars', json_decode('{"methods": {"insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "request": {"$ref": "Calendar"}, "response": {"$ref": "Calendar"}, "httpMethod": "POST", "path": "calendars", "id": "calendar.calendars.insert"}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.calendars.get", "httpMethod": "GET", "path": "calendars/{calendarId}", "response": {"$ref": "Calendar"}}, "clear": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "POST", "path": "calendars/{calendarId}/clear", "id": "calendar.calendars.clear"}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "Calendar"}, "id": "calendar.calendars.update", "httpMethod": "PUT", "path": "calendars/{calendarId}", "response": {"$ref": "Calendar"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "Calendar"}, "id": "calendar.calendars.patch", "httpMethod": "PATCH", "path": "calendars/{calendarId}", "response": {"$ref": "Calendar"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "DELETE", "path": "calendars/{calendarId}", "id": "calendar.calendars.delete"}}}', true));
-    $this->acl = new AclServiceResource($this, $this->serviceName, 'acl', json_decode('{"methods": {"insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.insert", "httpMethod": "POST", "path": "calendars/{calendarId}/acl", "response": {"$ref": "AclRule"}}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.acl.get", "httpMethod": "GET", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "list": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.acl.list", "httpMethod": "GET", "path": "calendars/{calendarId}/acl", "response": {"$ref": "Acl"}}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.update", "httpMethod": "PUT", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.patch", "httpMethod": "PATCH", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "DELETE", "path": "calendars/{calendarId}/acl/{ruleId}", "id": "calendar.acl.delete"}}}', true));
-    $this->colors = new ColorsServiceResource($this, $this->serviceName, 'colors', json_decode('{"methods": {"get": {"id": "calendar.colors.get", "path": "colors", "httpMethod": "GET", "response": {"$ref": "Colors"}}}}', true));
-    $this->events = new EventsServiceResource($this, $this->serviceName, 'events', json_decode('{"methods": {"reset": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "id": "calendar.events.reset", "httpMethod": "POST", "path": "calendars/{calendarId}/events/{eventId}/reset", "response": {"$ref": "Event"}}, "insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.insert", "httpMethod": "POST", "path": "calendars/{calendarId}/events", "response": {"$ref": "Event"}}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "timeZone": {"type": "string", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.get", "httpMethod": "GET", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "move": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "destination": {"required": true, "type": "string", "location": "query"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "id": "calendar.events.move", "httpMethod": "POST", "path": "calendars/{calendarId}/events/{eventId}/move", "response": {"$ref": "Event"}}, "list": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"orderBy": {"enum": ["startTime", "updated"], "type": "string", "location": "query"}, "showHiddenInvitations": {"type": "boolean", "location": "query"}, "pageToken": {"type": "string", "location": "query"}, "iCalUID": {"type": "string", "location": "query"}, "updatedMin": {"type": "string", "location": "query"}, "singleEvents": {"type": "boolean", "location": "query"}, "maxResults": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}, "q": {"type": "string", "location": "query"}, "showDeleted": {"type": "boolean", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "timeMin": {"type": "string", "location": "query"}, "timeZone": {"type": "string", "location": "query"}, "timeMax": {"type": "string", "location": "query"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.list", "httpMethod": "GET", "path": "calendars/{calendarId}/events", "response": {"$ref": "Events"}}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.update", "httpMethod": "PUT", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.patch", "httpMethod": "PATCH", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "instances": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "pageToken": {"type": "string", "location": "query"}, "maxResults": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}, "showDeleted": {"type": "boolean", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "timeZone": {"type": "string", "location": "query"}, "originalStart": {"type": "string", "location": "query"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.instances", "httpMethod": "GET", "path": "calendars/{calendarId}/events/{eventId}/instances", "response": {"$ref": "Events"}}, "import": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "Event"}, "id": "calendar.events.import", "httpMethod": "POST", "path": "calendars/{calendarId}/events/import", "response": {"$ref": "Event"}}, "quickAdd": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"text": {"required": true, "type": "string", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "id": "calendar.events.quickAdd", "httpMethod": "POST", "path": "calendars/{calendarId}/events/quickAdd", "response": {"$ref": "Event"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "httpMethod": "DELETE", "path": "calendars/{calendarId}/events/{eventId}", "id": "calendar.events.delete"}}}', true));
+    $this->acl = new AclServiceResource($this, $this->serviceName, 'acl', json_decode('{"methods": {"insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.insert", "httpMethod": "POST", "path": "calendars/{calendarId}/acl", "response": {"$ref": "AclRule"}}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.acl.get", "httpMethod": "GET", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "list": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "id": "calendar.acl.list", "httpMethod": "GET", "path": "calendars/{calendarId}/acl", "response": {"$ref": "Acl"}}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.update", "httpMethod": "PUT", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "AclRule"}, "id": "calendar.acl.patch", "httpMethod": "PATCH", "path": "calendars/{calendarId}/acl/{ruleId}", "response": {"$ref": "AclRule"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "ruleId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "DELETE", "path": "calendars/{calendarId}/acl/{ruleId}", "id": "calendar.acl.delete"}}}', true));
+    $this->colors = new ColorsServiceResource($this, $this->serviceName, 'colors', json_decode('{"methods": {"get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "id": "calendar.colors.get", "httpMethod": "GET", "path": "colors", "response": {"$ref": "Colors"}}}}', true));
+    $this->events = new EventsServiceResource($this, $this->serviceName, 'events', json_decode('{"methods": {"insert": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.insert", "httpMethod": "POST", "path": "calendars/{calendarId}/events", "response": {"$ref": "Event"}}, "get": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "timeZone": {"type": "string", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "alwaysIncludeEmail": {"type": "boolean", "location": "query"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.get", "httpMethod": "GET", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "move": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "destination": {"required": true, "type": "string", "location": "query"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "id": "calendar.events.move", "httpMethod": "POST", "path": "calendars/{calendarId}/events/{eventId}/move", "response": {"$ref": "Event"}}, "list": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"orderBy": {"enum": ["startTime", "updated"], "type": "string", "location": "query"}, "showHiddenInvitations": {"type": "boolean", "location": "query"}, "pageToken": {"type": "string", "location": "query"}, "iCalUID": {"type": "string", "location": "query"}, "updatedMin": {"format": "date-time", "type": "string", "location": "query"}, "singleEvents": {"type": "boolean", "location": "query"}, "alwaysIncludeEmail": {"type": "boolean", "location": "query"}, "maxResults": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}, "q": {"type": "string", "location": "query"}, "showDeleted": {"type": "boolean", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "timeMin": {"format": "date-time", "type": "string", "location": "query"}, "timeZone": {"type": "string", "location": "query"}, "timeMax": {"format": "date-time", "type": "string", "location": "query"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.list", "httpMethod": "GET", "path": "calendars/{calendarId}/events", "response": {"$ref": "Events"}}, "update": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "alwaysIncludeEmail": {"type": "boolean", "location": "query"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.update", "httpMethod": "PUT", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "patch": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "alwaysIncludeEmail": {"type": "boolean", "location": "query"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "request": {"$ref": "Event"}, "id": "calendar.events.patch", "httpMethod": "PATCH", "path": "calendars/{calendarId}/events/{eventId}", "response": {"$ref": "Event"}}, "instances": {"scopes": ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "pageToken": {"type": "string", "location": "query"}, "alwaysIncludeEmail": {"type": "boolean", "location": "query"}, "maxResults": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}, "showDeleted": {"type": "boolean", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "timeZone": {"type": "string", "location": "query"}, "originalStart": {"type": "string", "location": "query"}, "maxAttendees": {"format": "int32", "minimum": "1", "type": "integer", "location": "query"}}, "id": "calendar.events.instances", "httpMethod": "GET", "path": "calendars/{calendarId}/events/{eventId}/instances", "response": {"$ref": "Events"}}, "import": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"calendarId": {"required": true, "type": "string", "location": "path"}}, "request": {"$ref": "Event"}, "id": "calendar.events.import", "httpMethod": "POST", "path": "calendars/{calendarId}/events/import", "response": {"$ref": "Event"}}, "quickAdd": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"text": {"required": true, "type": "string", "location": "query"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "id": "calendar.events.quickAdd", "httpMethod": "POST", "path": "calendars/{calendarId}/events/quickAdd", "response": {"$ref": "Event"}}, "delete": {"scopes": ["https://www.googleapis.com/auth/calendar"], "parameters": {"eventId": {"required": true, "type": "string", "location": "path"}, "calendarId": {"required": true, "type": "string", "location": "path"}, "sendNotifications": {"type": "boolean", "location": "query"}}, "httpMethod": "DELETE", "path": "calendars/{calendarId}/events/{eventId}", "id": "calendar.events.delete"}}}', true));
+
   }
 }
 
@@ -1087,6 +1064,7 @@ class Event extends apiModel {
   protected $__organizerType = 'EventOrganizer';
   protected $__organizerDataType = '';
   public $organizer;
+  public $summary;
   public $id;
   protected $__attendeesType = 'EventAttendee';
   protected $__attendeesDataType = 'array';
@@ -1099,19 +1077,17 @@ class Event extends apiModel {
   public $etag;
   public $location;
   public $recurringEventId;
-  protected $__originalStartTimeType = 'EventDateTime';
-  protected $__originalStartTimeDataType = '';
-  public $originalStartTime;
-  public $status;
-  public $updated;
   protected $__gadgetType = 'EventGadget';
   protected $__gadgetDataType = '';
   public $gadget;
+  public $status;
+  public $updated;
   public $description;
   public $iCalUID;
   protected $__extendedPropertiesType = 'EventExtendedProperties';
   protected $__extendedPropertiesDataType = '';
   public $extendedProperties;
+  public $endTimeUnspecified;
   public $sequence;
   public $visibility;
   public $guestsCanModify;
@@ -1120,6 +1096,7 @@ class Event extends apiModel {
   public $end;
   public $attendeesOmitted;
   public $kind;
+  public $locked;
   public $created;
   public $colorId;
   public $anyoneCanAddSelf;
@@ -1127,7 +1104,9 @@ class Event extends apiModel {
   protected $__remindersDataType = '';
   public $reminders;
   public $guestsCanSeeOtherGuests;
-  public $summary;
+  protected $__originalStartTimeType = 'EventDateTime';
+  protected $__originalStartTimeDataType = '';
+  public $originalStartTime;
   public $guestsCanInviteOthers;
   public $transparency;
   public $privateCopy;
@@ -1142,6 +1121,12 @@ class Event extends apiModel {
   }
   public function getOrganizer() {
     return $this->organizer;
+  }
+  public function setSummary($summary) {
+    $this->summary = $summary;
+  }
+  public function getSummary() {
+    return $this->summary;
   }
   public function setId($id) {
     $this->id = $id;
@@ -1193,11 +1178,11 @@ class Event extends apiModel {
   public function getRecurringEventId() {
     return $this->recurringEventId;
   }
-  public function setOriginalStartTime(EventDateTime $originalStartTime) {
-    $this->originalStartTime = $originalStartTime;
+  public function setGadget(EventGadget $gadget) {
+    $this->gadget = $gadget;
   }
-  public function getOriginalStartTime() {
-    return $this->originalStartTime;
+  public function getGadget() {
+    return $this->gadget;
   }
   public function setStatus($status) {
     $this->status = $status;
@@ -1210,12 +1195,6 @@ class Event extends apiModel {
   }
   public function getUpdated() {
     return $this->updated;
-  }
-  public function setGadget(EventGadget $gadget) {
-    $this->gadget = $gadget;
-  }
-  public function getGadget() {
-    return $this->gadget;
   }
   public function setDescription($description) {
     $this->description = $description;
@@ -1234,6 +1213,12 @@ class Event extends apiModel {
   }
   public function getExtendedProperties() {
     return $this->extendedProperties;
+  }
+  public function setEndTimeUnspecified($endTimeUnspecified) {
+    $this->endTimeUnspecified = $endTimeUnspecified;
+  }
+  public function getEndTimeUnspecified() {
+    return $this->endTimeUnspecified;
   }
   public function setSequence($sequence) {
     $this->sequence = $sequence;
@@ -1271,6 +1256,12 @@ class Event extends apiModel {
   public function getKind() {
     return $this->kind;
   }
+  public function setLocked($locked) {
+    $this->locked = $locked;
+  }
+  public function getLocked() {
+    return $this->locked;
+  }
   public function setCreated($created) {
     $this->created = $created;
   }
@@ -1301,11 +1292,11 @@ class Event extends apiModel {
   public function getGuestsCanSeeOtherGuests() {
     return $this->guestsCanSeeOtherGuests;
   }
-  public function setSummary($summary) {
-    $this->summary = $summary;
+  public function setOriginalStartTime(EventDateTime $originalStartTime) {
+    $this->originalStartTime = $originalStartTime;
   }
-  public function getSummary() {
-    return $this->summary;
+  public function getOriginalStartTime() {
+    return $this->originalStartTime;
   }
   public function setGuestsCanInviteOthers($guestsCanInviteOthers) {
     $this->guestsCanInviteOthers = $guestsCanInviteOthers;
@@ -1330,8 +1321,9 @@ class Event extends apiModel {
 class EventAttendee extends apiModel {
   public $comment;
   public $displayName;
-  public $self;
   public $responseStatus;
+  public $self;
+  public $id;
   public $additionalGuests;
   public $resource;
   public $organizer;
@@ -1349,17 +1341,23 @@ class EventAttendee extends apiModel {
   public function getDisplayName() {
     return $this->displayName;
   }
+  public function setResponseStatus($responseStatus) {
+    $this->responseStatus = $responseStatus;
+  }
+  public function getResponseStatus() {
+    return $this->responseStatus;
+  }
   public function setSelf($self) {
     $this->self = $self;
   }
   public function getSelf() {
     return $this->self;
   }
-  public function setResponseStatus($responseStatus) {
-    $this->responseStatus = $responseStatus;
+  public function setId($id) {
+    $this->id = $id;
   }
-  public function getResponseStatus() {
-    return $this->responseStatus;
+  public function getId() {
+    return $this->id;
   }
   public function setAdditionalGuests($additionalGuests) {
     $this->additionalGuests = $additionalGuests;
@@ -1394,8 +1392,16 @@ class EventAttendee extends apiModel {
 }
 
 class EventCreator extends apiModel {
+  public $self;
   public $displayName;
   public $email;
+  public $id;
+  public function setSelf($self) {
+    $this->self = $self;
+  }
+  public function getSelf() {
+    return $this->self;
+  }
   public function setDisplayName($displayName) {
     $this->displayName = $displayName;
   }
@@ -1407,6 +1413,12 @@ class EventCreator extends apiModel {
   }
   public function getEmail() {
     return $this->email;
+  }
+  public function setId($id) {
+    $this->id = $id;
+  }
+  public function getId() {
+    return $this->id;
   }
 }
 
@@ -1511,8 +1523,16 @@ class EventGadget extends apiModel {
 }
 
 class EventOrganizer extends apiModel {
+  public $self;
   public $displayName;
   public $email;
+  public $id;
+  public function setSelf($self) {
+    $this->self = $self;
+  }
+  public function getSelf() {
+    return $this->self;
+  }
   public function setDisplayName($displayName) {
     $this->displayName = $displayName;
   }
@@ -1524,6 +1544,12 @@ class EventOrganizer extends apiModel {
   }
   public function getEmail() {
     return $this->email;
+  }
+  public function setId($id) {
+    $this->id = $id;
+  }
+  public function getId() {
+    return $this->id;
   }
 }
 
