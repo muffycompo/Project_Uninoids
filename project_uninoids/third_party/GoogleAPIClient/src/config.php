@@ -25,12 +25,12 @@ $apiConfig = array(
     'application_name' => 'Project Uninoids',
 
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
-    'oauth2_client_id' => '532131737975-n5u9o66sf7v7th00l7l62dmktn95ganu.apps.googleusercontent.com',
-    'oauth2_client_secret' => 'eQbSMWujNcSj1SUkpVF5ZLqA',
+    'oauth2_client_id' => '504693858372.apps.googleusercontent.com',
+    'oauth2_client_secret' => 'ui1C5dDHtv5YpNmhUvOURJsB',
     'oauth2_redirect_uri' => 'http://localhost/pu/auth',
 
     // The developer key, you get this at https://code.google.com/apis/console
-    'developer_key' => 'AIzaSyDeb9MJo9mBD2YVys_puEmkwBqAuGsWEC4',
+    'developer_key' => 'AIzaSyBN9rkUrm16foJWGKP80k6oawD5NbEtt3w',
 
     // OAuth1 Settings.
     // If you're using the apiOAuth auth class, it will use these values for the oauth consumer key and secret.

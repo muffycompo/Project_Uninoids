@@ -9,6 +9,8 @@ USE `uninoids` ;
 -- -----------------------------------------------------
 -- Table `uninoids`.`roles`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`roles` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`roles` (
   `role_id` INT NOT NULL AUTO_INCREMENT ,
   `role_name` VARCHAR(50) NULL ,
@@ -20,6 +22,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`users`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`users` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`users` (
   `user_id` VARCHAR(100) NOT NULL ,
   `regno` VARCHAR(50) NULL ,
@@ -41,6 +45,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`curriculums`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`curriculums` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`curriculums` (
   `curriculum_id` INT NOT NULL AUTO_INCREMENT ,
   `curriculum_name` VARCHAR(128) NULL ,
@@ -51,6 +57,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`tutors`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`tutors` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`tutors` (
   `user_id` VARCHAR(100) NOT NULL ,
   `curriculum_id` INT NOT NULL ,
@@ -74,6 +82,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`learning_groups`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`learning_groups` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`learning_groups` (
   `lg_id` INT NOT NULL AUTO_INCREMENT ,
   `lg_name` VARCHAR(100) NULL ,
@@ -92,6 +102,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`assessments`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`assessments` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`assessments` (
   `a_id` INT NOT NULL AUTO_INCREMENT ,
   `a_name` VARCHAR(100) NULL ,
@@ -112,6 +124,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`grades`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`grades` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`grades` (
   `grade_id` INT NOT NULL AUTO_INCREMENT ,
   `score` VARCHAR(10) NULL ,
@@ -130,6 +144,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `uninoids`.`certificates`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`certificates` ;
+
 CREATE  TABLE IF NOT EXISTS `uninoids`.`certificates` (
   `certificate_id` INT NOT NULL AUTO_INCREMENT ,
   `certificate_name` VARCHAR(100) NULL ,
@@ -147,7 +163,36 @@ CREATE  TABLE IF NOT EXISTS `uninoids`.`certificates` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `uninoids`.`ci_sessions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `uninoids`.`ci_sessions` ;
+
+CREATE  TABLE IF NOT EXISTS `uninoids`.`ci_sessions` (
+  `session_id` VARCHAR(40) NOT NULL DEFAULT '0' ,
+  `ip_address` VARCHAR(45) NOT NULL DEFAULT '0' ,
+  `user_agent` VARCHAR(120) NOT NULL ,
+  `last_activity` INT(10) UNSIGNED NOT NULL DEFAULT '0' ,
+  `user_data` TEXT NOT NULL ,
+  PRIMARY KEY (`session_id`) ,
+  INDEX `last_activity_idx` (`last_activity` ASC) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `uninoids`.`roles`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `uninoids`;
+INSERT INTO `uninoids`.`roles` (`role_id`, `role_name`, `scope`) VALUES (1, 'Students', 'student_access');
+INSERT INTO `uninoids`.`roles` (`role_id`, `role_name`, `scope`) VALUES (2, 'Tutors', 'tutor_access');
+INSERT INTO `uninoids`.`roles` (`role_id`, `role_name`, `scope`) VALUES (3, 'Administrators', 'admin_access');
+
+COMMIT;
