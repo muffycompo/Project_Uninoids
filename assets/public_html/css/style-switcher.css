@@ -1,0 +1,66 @@
+
+	.switcher {
+		position: fixed;
+		top: 95px;
+		left: 25px;
+		padding: 30px;
+		background: #e3e3e3 url(../images/style_options.png) no-repeat center;
+		border: 1px solid #CFCFCF;
+		z-index: 250;
+		border-radius: 5px;
+		display: block;
+	}
+	
+	
+	.theme_options {
+		position: fixed;
+		top: 95px;
+		left: 25px;
+		padding: 10px 15px;
+		margin-top: 80px;
+		background: #FFF;
+		border: 1px solid #e4e4e4;
+		z-index: 250;
+		border-radius: 5px;
+		display: block;
+		width: 150px;
+	}
+	
+	
+	.theme_options h1 {
+		font-size: 13px !important;
+		color: #939393 !important;
+		font-style: normal !important;
+		font-weight: normal !important;
+		margin: 0px !important;
+		padding: 0px !important;
+		padding-bottom: 5px !important;
+		font-family: 'Open Sans', sans-serif !important;
+		line-height:  1.5  !important;
+	}
+	
+	.patterns .pattern {
+		float: left;
+		width: 20px;
+		height: 20px;
+		border: 1px solid #cccccc;
+		display: block;
+		margin-right: 8px;
+		margin-bottom: 8px;
+		text-indent: -9999px;
+	}
+	
+	
+	.patterns .pattern.active {
+		border-color: #d86560;
+	}
+	
+	
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {
+		
+		.theme_options, .switcher {
+			display: none !important;
+		}
+		
+	}
