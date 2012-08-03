@@ -26,9 +26,9 @@ class Dashboard extends CI_Controller {
 			if($client->getAccessToken()){
 				// Do some API calls passing the json_decoded callback string
 				
-				$v_data['user_details'] = $oauth2Service->userinfo->get();	
+				$v_data['user_details'] = $this->session->userdata('user_sess');	
 			} else {
-				$v_data['user_details'] = $session_token;
+				$v_data['user_details'] = array();
 			}
 			 
 			$v_data['layout'] = 'dashboard_v';
@@ -112,7 +112,8 @@ class Dashboard extends CI_Controller {
 		global $drive;
 		
 		try {
-		    $mimeType = 'text/plain';
+		    //$mimeType = 'text/plain';
+		    $mimeType = 'application/vnd.google-apps.document';
 		    $newfile = new DriveFile();
 		    $newfile->setTitle($inputFile['title']);
 		    $newfile->setDescription($inputFile['description']);
@@ -125,10 +126,10 @@ class Dashboard extends CI_Controller {
 			    $newfile->setParents(array($parent));
 		    }
 
-		    /*$createdFile = $drive->files->insert($newfile, array(
+		    $createdFile = $drive->files->insert($newfile, array(
 		        'data' => $inputFile['content'],
 		        'mimeType' => $mimeType,
-		    ));*/
+		    ));
 			
 			/*$createdFile = $drive->files->get('0B4UhGn_nBQFlNWYyZm94LUJvRTQ');*/
 			

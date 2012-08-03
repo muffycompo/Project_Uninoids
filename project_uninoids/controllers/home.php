@@ -18,7 +18,7 @@ class home extends CI_Controller {
 		global $client;
 		$client->setApplicationName("Project Uninoids");
 		$client->setUseObjects(true);
-		$limit_to_domain = 'binghamuni.edu.ng';
+		//$limit_to_domain = 'binghamuni.edu.ng';
 		
 		if ($client->getAccessToken()) {
 			// The access token may have been updated lazily.
@@ -26,7 +26,8 @@ class home extends CI_Controller {
 			redirect('auth');
 		  
 		} else {
-		  	$v_data['login_url'] = $client->createAuthUrl($limit_to_domain);
+		  	/*$v_data['login_url'] = $client->createAuthUrl($limit_to_domain);*/
+		  	$v_data['login_url'] = $client->createAuthUrl();
 			$v_data['layout'] = 'home_v';
 			$this->load->view('layout/layout', $v_data);
 		}
