@@ -11,6 +11,7 @@
 		<p><?php echo anchor('','Assessment (Skill Based)') ?></p>
 		<p><?php echo anchor('','Grades') ?></p>
 		<p><?php echo anchor('','Certificates') ?></p>
+		<p><?php echo anchor('dashboard/groups_demo','Groups Demo (Experimental)') ?></p>
 		<p><?php echo anchor('dashboard/logout','Logout') ?></p>
 	</div>
 </div>

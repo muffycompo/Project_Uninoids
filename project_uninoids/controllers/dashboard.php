@@ -112,8 +112,8 @@ class Dashboard extends CI_Controller {
 		global $drive;
 		
 		try {
-		    //$mimeType = 'text/plain';
-		    $mimeType = 'application/vnd.google-apps.document';
+		    $mimeType = 'text/plain';
+		    //$mimeType = 'application/vnd.google-apps.document';
 		    $newfile = new DriveFile();
 		    $newfile->setTitle($inputFile['title']);
 		    $newfile->setDescription($inputFile['description']);
@@ -143,6 +143,34 @@ class Dashboard extends CI_Controller {
 		    error_log('Error creating a new file on Drive: ' . $e->getMessage(), 0);
 		    throw $e;
 		  }	
+	}
+	
+	public function groups_demo(){
+		global $client;
+		
+		$session_token = $this->session->userdata('token');
+		if (isset($session_token)) {
+			$client->setAccessToken($session_token);
+			if($client->getAccessToken()){
+				// Retrieving a Single User in a Domain:
+				$domain = "binghamuni.edu.ng";
+				$user = rawurlencode("systemadmin");
+				//$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/$domain/user/2.0/");
+				$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain",'POST', 
+				array('Content-Type' => 'text/plain'),
+				array(
+					'groupId' => 'unii',
+					'groupName' => 'Uninoids',
+					'description' => 'Testing Uninoids Groups'
+				));
+				$resp = $client::getIo()->authenticatedRequest($req);
+				echo "<h1>Single User</h1>";
+				echo print_r($resp->getResponseBody(), TRUE);				
+					
+				}
+		}
+		
+		
 	}
 	
 	public function logout(){

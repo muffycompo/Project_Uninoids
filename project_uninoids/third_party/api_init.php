@@ -13,6 +13,7 @@ global $oauth2Service;
 require_once APPPATH . "third_party/GoogleAPIClient/src/apiClient.php";
 require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiOauth2Service.php";
 require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiDriveService.php";
+//require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiGanService.php";
 
 $client = new apiClient();
 $oauth2Service = new apiOauth2Service($client);

@@ -78,9 +78,12 @@ $apiConfig = array(
           )
       ),
 	  'drive' => array(
-	  	  'scope' => 'https://www.googleapis.com/auth/drive',
-	  	  'scope' => 'https://www.googleapis.com/auth/drive.file',
+	  	  'scope' => array(
+		  	'https://www.googleapis.com/auth/drive',
+	  	    'https://www.googleapis.com/auth/drive.file',
+			)
 		  ),
+	  'apps' => array('scope' => 'https://apps-apis.google.com/a/feeds/groups'),
       'moderator' => array('scope' => 'https://www.googleapis.com/auth/moderator'),
       'oauth2' => array(
           'scope' => array(
