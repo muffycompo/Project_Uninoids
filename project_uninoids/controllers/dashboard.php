@@ -112,6 +112,9 @@ class Dashboard extends CI_Controller {
 		global $drive;
 		
 		try {
+			//==============================
+			// (1) Used for Creating a File from Drive by Id
+			//================================
 		    $mimeType = 'text/plain';
 		    //$mimeType = 'application/vnd.google-apps.document';
 		    $newfile = new DriveFile();
@@ -125,20 +128,47 @@ class Dashboard extends CI_Controller {
 			    $parent->setId($inputFile['parentId']);
 			    $newfile->setParents(array($parent));
 		    }
-
+			
+			// files.insert
 		    $createdFile = $drive->files->insert($newfile, array(
 		        'data' => $inputFile['content'],
 		        'mimeType' => $mimeType,
 		    ));
 			
+			//==============================
+			// (2) Used for Creating a File Permission from Drive by Id
+			//================================
+			/*$createdFileId = $createdFile['id'];
+			$filePermission = new Permission();
+			$filePermission->setValue('puone@binghamuni.edu.ng'); // The email address or domain name for the entity
+			$filePermission->setType('group'); // "user", "group", "domain" or "default"
+			$filePermission->setRole('writer'); // "owner", "writer" or "reader"
+			$filePermission->setAdditionalRoles(array('additionalRoles' => 'commenter')); // "commenter"
+			
+			// permissions.insert
+			$permissionFile = $drive->permissions->insert($createdFileId, $filePermission, array(
+				'sendNotificationEmails' => TRUE
+			));*/
+			
+			//==============================
+			// Used for Retrieving a File from Drive by Id
+			//================================
 			/*$createdFile = $drive->files->get('0B4UhGn_nBQFlNWYyZm94LUJvRTQ');*/
 			
+			//==============================
+			// Used for Updating a File from Drive by Id
+			//================================
 			/*$createdFile = $drive->files->update('0B4UhGn_nBQFlNWYyZm94LUJvRTQ',$newfile, array(
 		        'data' => $inputFile['content'],
 		        'mimeType' => $mimeType,
 		    ));*/
 			
-		    return $createdFile;
+		    // Return Created File Response
+			return $createdFile;
+		    
+			// Return Permission Response
+			/*return $permissionFile;*/
+			
 		  } catch (apiServiceException $e) {
 		    error_log('Error creating a new file on Drive: ' . $e->getMessage(), 0);
 		    throw $e;
@@ -155,17 +185,67 @@ class Dashboard extends CI_Controller {
 				// Retrieving a Single User in a Domain:
 				$domain = "binghamuni.edu.ng";
 				$user = rawurlencode("systemadmin");
-				//$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/$domain/user/2.0/");
+				
+				//==============================
+				// Used for Creating New Group
+				//================================
+				/*$atomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+				<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' 
+					xmlns:apps='http://schemas.google.com/apps/2006'>
+					<apps:property name='groupId' value='puone'/>
+					<apps:property name='groupName' value='Uninoids'/>
+					<apps:property name='description' value='Testing Project Uninoids Groups'/>
+				</atom:entry>";
+				
 				$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain",'POST', 
-				array('Content-Type' => 'text/plain'),
-				array(
-					'groupId' => 'unii',
-					'groupName' => 'Uninoids',
-					'description' => 'Testing Uninoids Groups'
-				));
+				array('Content-Type' => 'application/atom+xml'), $atomXml
+				);
 				$resp = $client::getIo()->authenticatedRequest($req);
-				echo "<h1>Single User</h1>";
-				echo print_r($resp->getResponseBody(), TRUE);				
+				echo "<h1>Creating New Group</h1>";
+				echo print_r($resp->getResponseBody(), TRUE);*/				
+				
+				
+				//==============================
+				// Used for Adding a member to a Group
+				//================================
+				/*$groupId = 'puone';
+				$username = 'systemadmin';
+				
+				$atomXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+				<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' 
+					xmlns:apps='http://schemas.google.com/apps/2006'>
+					<apps:property name='groupId' value='$groupId'/>
+					<apps:property name='memberId' value='$username'/>
+				</atom:entry>";
+				
+				$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$groupId/member",'POST', 
+				array('Content-Type' => 'application/atom+xml'), $atomXml
+				);
+				
+				$resp = $client::getIo()->authenticatedRequest($req);
+				echo "<h1>Adding a Member to a Group</h1>";
+				var_dump($resp->getResponseBody());*/
+			
+			
+				//==============================
+				// Used for Deleting a Group
+				//================================
+				/*$groupId = 'puone';
+				$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$groupId",'DELETE');
+				$resp = $client::getIo()->authenticatedRequest($req);
+				echo "<h1>Deleting a Group</h1>";
+				var_dump($resp->getResponseBody());*/
+				
+				
+				//==============================
+				// Used for Deleting a Member from a Group
+				//================================
+				/*$groupId = 'puone';
+				$username = 'uninoids';
+				$req = new apiHttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$groupId/member/$username",'DELETE');
+				$resp = $client::getIo()->authenticatedRequest($req);
+				echo "<h1>Deleting a Member from a Group</h1>";
+				var_dump($resp->getResponseBody());*/
 					
 				}
 		}
