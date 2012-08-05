@@ -92,8 +92,7 @@ class Dashboard extends CI_Controller {
 					$file_details = array(
 						'title' => $this->input->post('file_name') . '.' . $this->input->post('file_ext'),
 						'description' => $this->input->post('file_description'),
-						'content' => $this->input->post('file_body'),
-						'parentId' => NULL
+						'content' => $this->input->post('file_body')
 					);
 				
 					$new_file = $this->_save_file($file_details);

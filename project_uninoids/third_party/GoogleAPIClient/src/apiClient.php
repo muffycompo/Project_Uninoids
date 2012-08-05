@@ -186,9 +186,9 @@ class apiClient {
    * Construct the OAuth 2.0 authorization request URI.
    * @return string
    */
-  public function createAuthUrl() {
+  public function createAuthUrl($hd = '') {
     $service = $this->prepareService();
-    return self::$auth->createAuthUrl($service['scope']);
+    return self::$auth->createAuthUrl($service['scope'], $hd); // Added by Mfawa Alfred Onen to Support Hosted Domains
   }
 
   /**

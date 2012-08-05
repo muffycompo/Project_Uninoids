@@ -124,7 +124,7 @@ class apiOAuth2 extends apiAuth {
    * @param string $scope The scope is expressed as a list of space-delimited strings.
    * @return string
    */
-  public function createAuthUrl($scope) {
+  public function createAuthUrl($scope, $hd = '') {
     $params = array(
         'response_type=code',
         'redirect_uri=' . urlencode($this->redirectUri),
@@ -137,6 +137,12 @@ class apiOAuth2 extends apiAuth {
     if (isset($this->state)) {
       $params[] = 'state=' . urlencode($this->state);
     }
+	
+	// Added by Mfawa Alfred Onen to Support Hosted Domains
+    if (! empty($hd)) {
+      $params[] = 'hd=' . urlencode($hd);
+    }
+	
     $params = implode('&', $params);
     return self::OAUTH2_AUTH_URL . "?$params";
   }
