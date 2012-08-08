@@ -28,3 +28,24 @@ function is_valid_tutor($tutor_email){
 		return FALSE;
 	}
 }
+
+function curriculum_dropdown($name='lg_curiculum', $selected=NULL)
+{
+	$c =& get_instance();
+	$rs = $c->db->select('curriculum_id,curriculum_name')->get('curriculums');
+	if($rs->num_rows() > 0){
+		foreach($rs->result() as $option){
+			$options[$option->curriculum_id] = $option->curriculum_name;
+		}
+	}
+	return form_dropdown($name, $options, $selected);
+}
+
+/*function expand_tutor_id_from_email($email_address){
+	$c =& get_instance();
+	return $c->db->select('tutor_id')
+		->where('curriculum_id', $curriculum_id)
+		->get('curriculums')
+		->row(0)
+		->curriculum_name;
+}*/ 
