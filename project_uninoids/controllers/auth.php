@@ -33,9 +33,9 @@ class Auth extends CI_Controller {
 			$user = $oauth2Service->userinfo->get();
 			// Check if User Exist
 			$token_string = json_decode($session_token);
-			if($this->Users_m->verifyUser($user['id'])){
-				if($this->Users_m->updateRefreshToken($user['id'], $token_string->refresh_token)){
-					$user_sess = array('user_sess' => $this->Users_m->getUserDetails($user['id']));
+			if($this->Users_m->verifyUser($user->id)){
+				if($this->Users_m->updateRefreshToken($user->id, $token_string->refresh_token)){
+					$user_sess = $this->Users_m->getUserDetails($user->id);
 					
 					// Set Session data
 					$this->session->set_userdata($user_sess);
@@ -49,7 +49,7 @@ class Auth extends CI_Controller {
 			} else {
 				// Create New Entry
 				if($this->Users_m->createUser($token_string->refresh_token, $user)){
-					$user_sess = array('user_sess' => $this->Users_m->getUserDetails($user['id']));
+					$user_sess = $this->Users_m->getUserDetails($user->id);
 					
 					// Set Session data
 					$this->session->set_userdata($user_sess);

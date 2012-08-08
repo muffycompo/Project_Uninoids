@@ -8,13 +8,12 @@
 global $apiConfig;
 global $client;
 global $oauth2Service;
-//global $drive;
+global $drive;
 
-require_once APPPATH . "third_party/GoogleAPIClient/src/apiClient.php";
-require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiOauth2Service.php";
-require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiDriveService.php";
-//require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/apiGanService.php";
+require_once APPPATH . "third_party/GoogleAPIClient/src/Google_Client.php";
+require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/Google_Oauth2Service.php";
+require_once APPPATH . "third_party/GoogleAPIClient/src/contrib/Google_DriveService.php";
 
-$client = new apiClient();
-$oauth2Service = new apiOauth2Service($client);
-$drive = new apiDriveService($client);
+$client = new Google_Client();
+$oauth2Service = new Google_Oauth2Service($client);
+$drive = new Google_DriveService($client);

@@ -23,10 +23,12 @@ class Users_m extends CI_Model {
 		if(isset($refresh_token)){
 					
 			$insert_array = array(
-				'user_id' => $oauth2_userinfo['id'], 
-				'first_name' => $oauth2_userinfo['given_name'], 
-				'last_name' => $oauth2_userinfo['family_name'], 
-				'email_address' => $oauth2_userinfo['email'], 
+				'user_id' => $oauth2_userinfo->id, 
+				'first_name' => $oauth2_userinfo->given_name, 
+				'last_name' => $oauth2_userinfo->family_name, 
+				'email_address' => $oauth2_userinfo->email, 
+				'gender' => $oauth2_userinfo->gender, 
+				'user_image_path' => $oauth2_userinfo->picture, 
 				'refresh_token' => $refresh_token, 
 				'role_id' => 1
 			);
@@ -50,9 +52,20 @@ class Users_m extends CI_Model {
 	}
 	
 	public function getUserDetails($user_id){
-		$rs = $this->db->where('user_id', $user_id)->get('users');
+		$rs = $this->db->select('user_id,email_address,refresh_token,role_id')->where('user_id', $user_id)->limit(1)->get('users');
 		if($rs->num_rows() > 0){
-			return $rs->result_array();
+			$user = array();
+			return $rs->row_array();
+		} else {
+			return FALSE;
+		}
+	}
+	
+	public function getUserMoreDetails($user_id){
+		$rs = $this->db->where('user_id', $user_id)->limit(1)->get('users');
+		if($rs->num_rows() > 0){
+			$user = array();
+			return $rs->row_array();
 		} else {
 			return FALSE;
 		}
