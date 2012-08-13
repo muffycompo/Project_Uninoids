@@ -10,10 +10,10 @@
 			<?php echo form_input('lg_name'); ?>
 		</p>
 		
-		<!--<p>
+		<p>
 			<label>Curriculum</label><br />
-			<?php //echo curriculum_dropdown('curriculum_status'); ?>
-		</p>-->
+			<?php echo curriculum_dropdown('lg_curriculum', $this->session->userdata('email_address')); ?>
+		</p>
 		
 		<p>
 			<label>Student Email List (comma separated) <span style="color: red;">*</span></label><br />

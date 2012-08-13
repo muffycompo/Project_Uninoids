@@ -9,7 +9,9 @@
 		<p>First Name: <strong><?php echo $user_profile_details['first_name']; ?></strong></p>
 		<p>Last Name: <strong><?php echo $user_profile_details['last_name']; ?></strong></p>
 		<p>Email Address: <strong><?php echo $user_profile_details['email_address']; ?></strong></p>
-		<p>Gender: <strong><?php echo ucfirst($user_profile_details['gender']); ?></strong></p>
+		<?php if($user_profile_details['gender'] != NULL) : ?>
+		    <p>Gender: <strong><?php echo ucfirst($user_profile_details['gender']); ?></strong></p>
+		<?php endif; ?>
 		<p><?php echo anchor('dashboard','<< Back to Dashboard'); ?></p>
 	</div>
 </div>

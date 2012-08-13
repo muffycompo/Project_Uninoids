@@ -19,10 +19,7 @@ class home extends CI_Controller {
 		$client->setApplicationName("Project Uninoids");
 		$client->setScopes(array(
 		    'https://apps-apis.google.com/a/feeds/groups/',
-		    /*'https://apps-apis.google.com/a/feeds/alias/',
-		    'https://apps-apis.google.com/a/feeds/user/',*/
 			'https://www.googleapis.com/auth/drive',
-			/*'https://www.googleapis.com/auth/drive.file',*/
 			'https://www.googleapis.com/auth/userinfo.profile',
 			'https://www.googleapis.com/auth/userinfo.email',
 			'https://www.googleapis.com/auth/plus.me',

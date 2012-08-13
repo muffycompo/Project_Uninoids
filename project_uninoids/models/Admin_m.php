@@ -70,7 +70,7 @@ class Admin_m extends CI_Model {
 		$role_id = $this->db->select('role_id')->where('email_address',$tutor_email)->limit(1)->get('users')->row(0)->role_id;
 		if($role_id == 1){
 			$this->db->where('role_id',$role_id)->update('users',array('role_id' => 2));
-			if($this->db->affected_rows() > 0){ continue;} else {return FALSE;}
+			if($this->db->affected_rows() < 1){ return FALSE; }
 		}
 		
 		foreach($curriculum_list as $key => $value){
@@ -113,6 +113,55 @@ class Admin_m extends CI_Model {
 				return FALSE;
 		}
 	}
-	
 
+	public function addStudyMaterials($sm_title, $sm_url, $curriculum_id){
+	    $sm_array = array(
+	            'sm_title' => $sm_title,
+	            'sm_url' => strtolower($sm_url),
+	            'curriculum_id' => (int) $curriculum_id
+	    );
+	
+	    $this->db->insert('study_materials', $sm_array);
+	
+	    if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }
+	}
+	
+	public function listStudyMaterials($id = ''){
+	    if(! empty($id)){
+	        $rs = $this->db->where('sm_id', $id)->get('study_materials');
+	    } else {
+	        $rs = $this->db->order_by('sm_id','DESC')->get('study_materials');
+	    }
+	    if($rs->num_rows() > 0){
+	        return $rs->result();
+	    } else {
+	        return FALSE;
+	    }
+	}
+
+	public function updateStudyMaterials($sm_title, $sm_url, $curriculum_id, $sm_id){
+	    $sm_array = array(
+	            'sm_title' => $sm_title,
+	            'sm_url' => $sm_url,
+	            'curriculum_id' => $curriculum_id
+	    );
+	
+	    $this->db->where('sm_id', $sm_id)->update('study_materials', $sm_array);
+	
+	    if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }
+	}
+	
+	public function deleteStudyMaterials($sm_id){
+	    if(! empty($sm_id)){
+	        $this->db->where('sm_id', $sm_id)->delete('study_materials');
+	        if($this->db->affected_rows() > 0){
+	            return TRUE;
+	        } else {
+	            return FALSE;
+	        }
+	    } else {
+	        return FALSE;
+	    }
+	}
+	
 }

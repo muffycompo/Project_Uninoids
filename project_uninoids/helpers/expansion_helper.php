@@ -26,6 +26,24 @@ function _expand_curriculum_name($curriculum_id){
 		->curriculum_name;
 }
 
+function expand_lg_name($lg_id){
+    $c =& get_instance();
+    return $c->db->select('lg_name')
+    ->where('lg_id', $lg_id)
+    ->get('learning_groups')
+    ->row(0)
+    ->lg_name;
+}
+
+function expand_assessment_name($a_id){
+    $c =& get_instance();
+    return $c->db->select('a_name')
+    ->where('a_id', $a_id)
+    ->get('assessments')
+    ->row(0)
+    ->a_name;
+}
+
 function expand_tutor_curriculum_list($tutor_email){
 	$c =& get_instance();
 	$rs = $c->db->select('curriculum_id')->where('tutor_email', $tutor_email)->get('tutors');
@@ -56,4 +74,45 @@ function expand_tutor_name_from_email($tutor_email){
 	} else {
 		return '';
 	}
+}
+
+function expand_lg_id_from_assessment($assessment_id){
+	$c =& get_instance();
+	if(! empty($assessment_id)){
+		return $c->db->select('lg_id')->where('a_id', $assessment_id)->limit(1)->get('assessments')->row(0)->lg_id;
+	} else {
+		return '';
+	}
+}
+
+function expand_assessment_id_from_lg($lg_id){
+	$c =& get_instance();
+	if(! empty($lg_id)){
+		return $c->db->select('a_id')->where('lg_id', $lg_id)->limit(1)->get('assessments')->row(0)->a_id;
+	} else {
+		return '';
+	}
+}
+
+function expand_tutor_id_from_lg($lg_id){
+	$c =& get_instance();
+	if(! empty($lg_id)){
+		return $c->db->select('tutor_id')->where('lg_id', $lg_id)->limit(1)->get('learning_groups')->row(0)->tutor_id;
+	} else {
+		return '';
+	}
+}
+
+function expand_curriculum_from_id($tutor_id){
+    $c =& get_instance();
+    $rs = $c->db->select('tutors.curriculum_id')
+            ->from('tutors')
+            ->join('learning_groups','tutors.tutor_id=learning_groups.tutor_id')
+            ->where('learning_groups.tutor_id', $tutor_id)
+            ->get();
+    if($rs->num_rows() > 0){
+        return strtolower($rs->row(0)->curriculum_id);
+    } else {
+        return '';
+    }
 }

@@ -24,6 +24,8 @@ class Auth extends CI_Controller {
 		if (isset($code)) {
 			$client->authenticate();
 			$this->session->set_userdata('token', $client->getAccessToken());
+		} else {
+		    redirect('/');
 		}
 		
 		$session_token = $this->session->userdata('token');
@@ -60,7 +62,7 @@ class Auth extends CI_Controller {
 					redirect('/');					
 				}
 			}
-			
+			$this->session->set_userdata(array('logged_in' => TRUE));
 			redirect('dashboard');
 		}
 

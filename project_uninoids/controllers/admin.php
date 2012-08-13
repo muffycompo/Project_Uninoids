@@ -15,6 +15,13 @@ class Admin extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
+		// Make sure we are logged in
+		if(is_logged_in() === FALSE){
+		    redirect(base_url());
+		}
+		if(only_admin($this->session->userdata('role_id')) === FALSE){
+		    redirect('dashboard');
+		}
 	}
 
 	public function manage_curriculum(){
@@ -115,12 +122,67 @@ class Admin extends CI_Controller {
 			$this->load->view('layout/layout', $v_data);
 		} else if($action == 'delete') {
 			if($this->Admin_m->deleteTutor(format_uri_email($id,'_')) !== FALSE){
-				redirect('admin/manage_tutor');
+				redirect('admin/manage_tutors');
 			} else {
 				die('An error occurred, please check back when we fix this issue or click '. anchor('admin/manage_tutors','here') .' to try again!');
 			}
 		}
 		
 	}
+	
+	public function manage_sm(){
+		$study_materials = $this->Admin_m->listStudyMaterials();
+		if($study_materials !== FALSE){
+			$v_data['study_materials'] = $study_materials;
+		} else {
+			$v_data['study_materials'] = NULL;
+		}
+		$v_data['layout'] = 'admin/manage_sm_v';
+		$this->load->view('layout/layout', $v_data);		
+	}
+	
+	public function add_sm(){
+	    if($this->input->post('submit_sm')){
+	        // TODO: Do some Validation
+	        if($this->input->post('sm_id')){
+	            //$sm_title, $sm_url, $curriculum_id
+	            if($this->Admin_m->updateStudyMaterials($this->input->post('sm_title'),$this->input->post('sm_url'),$this->input->post('curriculum_id'),$this->input->post('sm_id'))){
+	                redirect('admin/manage_sm');
+	            } else {
+	                die('An error occurred, please check back when we fix this issue or click '. anchor('admin/manage_sm','here') .' to try again!');
+	            }
+	        } else {
+	            if($this->Admin_m->addStudyMaterials($this->input->post('sm_title'),$this->input->post('sm_url'),$this->input->post('curriculum_id'))){
+	                redirect('admin/manage_sm');
+	            } else {
+	                die('An error occurred, please check back when we fix this issue or click '. anchor('admin/add_sm','here') .' to try again!');
+	            }
+	        }
+	    } else {
+	        $v_data['layout'] = 'admin/add_sm_v';
+	        $this->load->view('layout/layout', $v_data);
+	    }
+	
+	}
 
+	public function sm_action($action, $id){
+	    if($action == 'edit'){
+	        $details = $this->Admin_m->listStudyMaterials($id);
+	        if($details !== FALSE){
+	            $v_data['study_materials'] = $details;
+	        } else {
+	            $v_data['study_materials'] = NULL;
+	        }
+	        $v_data['layout'] = 'admin/sm_edit_v';
+	        $this->load->view('layout/layout', $v_data);
+	    } else if($action == 'delete') {
+	        if($this->Admin_m->deleteStudyMaterials($id) !== FALSE){
+	            redirect('admin/manage_sm');
+	        } else {
+	            die('An error occurred, please check back when we fix this issue or click '. anchor('admin/manage_sm','here') .' to try again!');
+	        }
+	    }
+	
+	}
+	
 }
