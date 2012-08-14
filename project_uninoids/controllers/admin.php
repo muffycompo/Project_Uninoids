@@ -121,7 +121,9 @@ class Admin extends CI_Controller {
 			$v_data['layout'] = 'admin/tutor_details_v';
 			$this->load->view('layout/layout', $v_data);
 		} else if($action == 'delete') {
-			if($this->Admin_m->deleteTutor(format_uri_email($id,'_')) !== FALSE){
+                        $tid = substr($id, 0,1);
+                        $t_email = substr($id, 2);
+			if($this->Admin_m->deleteTutor($tid, format_uri_email($t_email,'_')) !== FALSE){
 				redirect('admin/manage_tutors');
 			} else {
 				die('An error occurred, please check back when we fix this issue or click '. anchor('admin/manage_tutors','here') .' to try again!');

@@ -22,7 +22,7 @@
 		
 		<p>
 			<label>Upload File Type<span style="color: red;">*</span></label><br />
-			<?php echo form_dropdown('a_ext', array('doc' => 'Microsoft Word','pdf' => 'PDF')); ?>
+			<?php echo form_dropdown('a_ext', array('doc' => 'Microsoft Word (97 - 2003)','docx' => 'Microsoft Word (2007 - 2010)','pdf' => 'PDF')); ?>
 		</p>
 		
 		<p>

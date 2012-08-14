@@ -19,7 +19,7 @@
 						<tr>
 							<td style="border: 1px solid #3e3e3e;"><?php echo expand_tutor_name_from_email($tutor->tutor_email); ?></td>
 							<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo expand_tutor_curriculum_list($tutor->tutor_email); ?></td>
-							<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo anchor('admin/tutor_action/details/' .format_uri_email($tutor->tutor_email,'@'),'View details'); ?> | <?php echo anchor('admin/tutor_action/delete/' . format_uri_email($tutor->tutor_email,'@'),'Delete'); ?></td>
+							<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo anchor('admin/tutor_action/details/' .format_uri_email($tutor->tutor_email,'@'),'View details'); ?> | <?php echo anchor('admin/tutor_action/delete/' .$tutor->tutor_id . '_' . format_uri_email($tutor->tutor_email,'@'),'Delete'); ?></td>
 						</tr>
 					<?php endif; ?>
 				<?php endforeach; ?>

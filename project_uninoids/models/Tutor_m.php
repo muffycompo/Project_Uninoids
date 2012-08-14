@@ -5,26 +5,70 @@
 * Link: http://www.binghamuni.edu.ng
 * Email: systemadmin@binghamuni.edu.ng
 */
+// Google API Client Includes
+require_once APPPATH . "third_party/api_init.php";
+global $apiConfig;
+global $client;
+global $oauth2Service;
 
 class Tutor_m extends CI_Model {
 	public function __construct(){
 		parent::__construct();
 	}
 
-	public function addLg($lg_name, $curriculum_id, $lg_student_list){
-		$lg_array = array(
-			'lg_name' => $lg_name,
-			'student_list' => $lg_student_list,
-			'tutor_id' => $this->tutor_from_curriculum($curriculum_id, $this->session->userdata('email_address'))
-		);
-				
-		if($this->db->select('lg_name')->where('lg_name', $lg_name)->get('learning_groups')->num_rows() > 0){
-			$this->db->where('lg_name', $lg_name)->update('curriculums', $lg_array);
-		} else {
-			$this->db->insert('learning_groups', $lg_array);
-		}
-		
-		if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }	
+	public function addLg($lg_name, $curriculum_id, $lg_student_list, $domain = 'binghamuni.edu.ng'){
+            global $client;
+            global $drive;
+            $session_token = $this->session->userdata('token');
+            if (isset($session_token)) {
+                $client->setAccessToken($session_token);
+                if($client->getAccessToken()){
+                   // Pre API Call
+                   $group_id = strtolower(str_replace(" ", "_", $lg_name));
+                   
+                   // Make API Call to Google Provisioning API and Create a Group
+                   // Tutor must have "Uninoids Groups Role" to make this API Call
+                   $group_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain",'POST', array('Content-Type' => 'application/atom+xml'), new_google_group($group_id, $lg_name));
+		   $group_resp = $client::getIo()->authenticatedRequest($group_req);
+                   
+                   // Check if we were successfull creating the Group
+                   if($group_resp->getResponseHttpCode() == 201){
+                        // Pre API Call
+                        $e = explode(',',$lg_student_list);
+                        $y = 0;
+                        foreach ($e as $key => $email_id) {
+                             // Make API Call to Google Provisioning API and add users to Group
+                             // Tutor must have "Uninoids Groups Role" to make this API Call
+                             $member_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$group_id/member",'POST', array('Content-Type' => 'application/atom+xml'), add_member_to_google_group($group_id, $email_id));
+                             $member_resp = $client::getIo()->authenticatedRequest($member_req);
+                             if($member_resp->getResponseHttpCode() == 201){$y++;}
+                        }
+                        if($y > 0){
+                            
+                            try {
+                                // Try Creating a Folder for the Learning Group
+                                $mimeType = 'application/vnd.google-apps.folder';
+                                $newfolder = new Google_DriveFile();
+                                $newfolder->setTitle($lg_name);
+                                $newfolder->setMimeType($mimeType);
+                      
+                                $createdFolder = $drive->files->insert($newfolder);
+                                $lg_folder_reference = $createdFolder->getId();
+                                
+                            } catch (Exception $e){ return NULL;}
+                           $lg_array = array(
+                                'lg_name' => $lg_name,
+                                'student_list' => $lg_student_list,
+                                'lg_email' => $group_id . '@' . $domain,
+                                'lg_folder_reference' => $lg_folder_reference,
+                                'tutor_id' => $this->tutor_from_curriculum($curriculum_id, $this->session->userdata('email_address'))
+                            ); 
+                           $this->db->insert('learning_groups', $lg_array);
+                           if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }
+                        } else {return FALSE;}
+                   } else { return FALSE;}
+                } else { return FALSE;}
+            } else {return FALSE;}
 	}
 
 	
@@ -43,15 +87,37 @@ class Tutor_m extends CI_Model {
 	
 	public function deleteLg($id){
 	    if(! empty($id)){
-	        $this->db->where('lg_id', $id)->delete('learning_groups');
-	        if($this->db->affected_rows() > 0){
-	            return TRUE;
-	        } else {
-	            return FALSE;
-	        }
-	    } else {
-	        return FALSE;
-	    }
+                global $client;
+                global $drive;
+                $session_token = $this->session->userdata('token');
+                if (isset($session_token)) {
+                $client->setAccessToken($session_token);
+                    if($client->getAccessToken()){
+                            // Pre API Call
+                            $d_e = $this->db->select('lg_email')->where('lg_id',$id)->limit(1)->get('learning_groups')->row(0)->lg_email;
+                            $folder_id = $this->db->select('lg_folder_reference')->where('lg_id',$id)->limit(1)->get('learning_groups')->row(0)->lg_folder_reference;
+                            $domain_email = explode('@',$d_e);
+                            $domain = $domain_email[1];
+                            $group_id = $domain_email[0];
+
+                            // Make API Call to Google Provisioning API and Delete a Group
+                            // Tutor must have "Uninoids Groups Role" to make this API Call
+                            $group_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$group_id",'DELETE');
+                            $group_resp = $client::getIo()->authenticatedRequest($group_req);
+                            
+                            if($group_resp->getResponseHttpCode() == 200){
+                                try {
+                                    // Try Deleting the Learning Group Folder
+                                    $drive->files->delete($folder_id);
+                                  } catch (Exception $e) {
+                                      return NULL;
+                                  }
+                                $this->db->where('lg_id', $id)->delete('learning_groups');
+                                if($this->db->affected_rows() > 0){return TRUE;} else {return FALSE;}                                
+                            } else {return FALSE;}
+                     } else {return FALSE;}
+                } else {return FALSE;}
+            } else {return FALSE;}
 	}
 	
 	public function tutor_from_curriculum($curriculum_id, $email_address){
@@ -64,23 +130,81 @@ class Tutor_m extends CI_Model {
 	    
 	}
 
-	public function addAssessment($a_name, $a_description, $lg_id, $start_date, $due_date,  $file_id,$file_url){
+	public function addAssessment($a_name, $a_description, $lg_id, $start_date, $due_date, $ext, $content){
 	    // Add Each Learning Group Student to file permission
-	    $s_date = new DateTime($start_date);
-	    $d_date = new DateTime($due_date);
-	    $assessments_array = array(
-	            'a_name' => $a_name,
-	            'a_description' => $a_description,
-	            'a_file_id' => $file_id,
-	            'a_file_url' => $file_url,
-	            'a_start_date' => $s_date->getTimestamp(),
-	            'a_due_date' => $d_date->getTimestamp(),
-	            'lg_id' => $lg_id
-	    );
-	
-        $this->db->insert('assessments', $assessments_array);
-	
-	    if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }
+            global $client;
+            global $drive;
+            $session_token = $this->session->userdata('token');
+            if (isset($session_token)) {
+            $client->setAccessToken($session_token);
+                if($client->getAccessToken()){
+                    $folder_id = $this->db->select('lg_folder_reference')->where('lg_id',$lg_id)->limit(1)->get('learning_groups')->row(0)->lg_folder_reference;
+                    $group_id = $this->db->select('lg_email')->where('lg_id',$lg_id)->limit(1)->get('learning_groups')->row(0)->lg_email;
+                    try {
+                        // Try Deleting the Learning Group Folder
+                        if($ext == 'doc'){$mimeType = 'application/msword';} 
+                        else if($ext == 'docx'){$mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';} 
+                        else if($ext == 'pdf'){$mimeType = 'application/pdf';} 
+                        else {$mimeType = 'text/plain';}
+                        
+                        $drive_file_name = str_replace(' ', '_', $a_name) . '.' .$ext;
+                        $newfile = new Google_DriveFile();
+                        $newfile->setTitle($drive_file_name);
+                        $newfile->setDescription($a_description);
+                        $newfile->setMimeType($mimeType);
+                        
+                        // Set the parent folder.
+                        if ($folder_id != null) {
+                            $parent = new Google_ParentReference();
+                            $parent->setId($folder_id);
+                            $newfile->setParents(array($parent));
+                        }
+                        
+                        //var_dump($content);
+                        //exit;
+                        // Create File Inside Learning Group Folder
+                        $theFile = $drive->files->insert($newfile, array('data' => $content));
+                        $file_id = $theFile->getId();
+                        $file_url = $theFile->getAlternateLink();
+                        
+                        // Set File Permission and Sharing
+                        $permission = new Google_Permission();
+			$permission->setValue($group_id); // The email address or domain name for the entity
+			$permission->setType('group'); // "user", "group", "domain" or "default"
+			$permission->setRole('reader'); // "owner", "writer" or "reader"
+//			$permission->setAdditionalRoles(array('commenter')); // array('commenter')
+
+                        // Set Permission and Notify Group with Email
+//                        $t_permission = $drive->permissions->insert($file_id, $permission, array('sendNotificationEmails' => TRUE));
+                        $drive->permissions->insert($file_id, $permission);
+                        
+//                        var_dump($t_permission);
+//                        exit;
+                       
+                        
+                     } catch (Exception $e) {
+                         $file_id = NULL;
+                         $file_url = NULL;
+//                         var_dump($e->getMessage());
+//                         exit;
+                     }
+                    
+                    $s_date = new DateTime($start_date);
+                    $d_date = new DateTime($due_date);
+                    $assessments_array = array(
+                            'a_name' => $a_name,
+                            'a_description' => $a_description,
+                            'a_file_id' => $file_id,
+                            'a_file_url' => $file_url,
+                            'a_start_date' => $s_date->getTimestamp(),
+                            'a_due_date' => $d_date->getTimestamp(),
+                            'lg_id' => $lg_id);
+                    $this->db->insert('assessments', $assessments_array);
+                    if($this->db->affected_rows() > 0){ return TRUE; } else {return FALSE; }
+                } else {return FALSE;}
+            } else {return FALSE;}
+            
+            
 	}
 	
 	public function listAssessments($id = ''){
@@ -98,15 +222,41 @@ class Tutor_m extends CI_Model {
 	
 	public function deleteAssessment($id){
 	    if(! empty($id)){
-	        $this->db->where('a_id', $id)->delete('assessments');
-	        if($this->db->affected_rows() > 0){
-	            return TRUE;
-	        } else {
-	            return FALSE;
-	        }
-	    } else {
-	        return FALSE;
-	    }
+                    // Add Each Learning Group Student to file permission
+                    global $client;
+                    global $drive;
+                    $session_token = $this->session->userdata('token');
+                    if (isset($session_token)) {
+                    $client->setAccessToken($session_token);
+                        if($client->getAccessToken()){
+//                            $lg_id = $this->db->select('lg_id')->where('a_id',$id)->limit(1)->get('assessments')->row(0)->lg_id;
+                            $folder_id = $this->db->select('learning_groups.lg_folder_reference')
+                                    ->join('assessments', 'learning_groups.lg_id=assessments.lg_id', 'inner')
+                                    ->where('assessments.a_id',$id)
+                                    ->limit(1)
+                                    ->get('learning_groups')
+                                    ->row(0)->lg_folder_reference;
+                            
+                            $file_id = $this->db->select('a_file_id')->where('a_id',$id)->limit(1)->get('assessments')->row(0)->a_file_id;
+                            $fname = $this->db->select('a_name')->where('a_id',$id)->limit(1)->get('assessments')->row(0)->a_name;
+                            $file_name = str_replace(' ', '_', $fname);
+                            $full_file_path_name = FCPATH . 'assets/uploads/' . $file_name;
+                            
+                            // Delete Physical Uploaded File
+                            unlink($full_file_path_name);
+                            try {
+                                // Delete the assessment file from Learning Group Folder
+                                $drive->children->delete($folder_id, $file_id);
+                             } catch (Exception $e) {
+                                 return NULL;
+                             }
+                                $this->db->where('a_id', $id)->delete('assessments');
+                                if($this->db->affected_rows() > 0){return TRUE;} else {return FALSE;}
+                            } else {return FALSE;}
+                        } else {return FALSE;}
+                    } else {return FALSE;}
+                
+	        
 	}
 
 	public function addGrade($a_id, $post_data){

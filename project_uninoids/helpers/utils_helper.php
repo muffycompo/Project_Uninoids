@@ -35,7 +35,7 @@ function is_valid_student($student_email){
     $c =& get_instance();
     $rs = $c->db->select('role_id')->where('email_address',$student_email)->limit(1)->get('users');
     if($rs->num_rows() > 0){
-    if($rs->row(0)->role_id == 1){return TRUE;} else { return FALSE;}
+        if($rs->row(0)->role_id == 1){return TRUE;} else { return FALSE;}
     } else {
         return FALSE;
     }

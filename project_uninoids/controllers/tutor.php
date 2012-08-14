@@ -100,9 +100,7 @@ class Tutor extends CI_Controller {
             $due_date = $this->input->post('due_year') .'-'. $this->input->post('due_month') .'-'. $this->input->post('due_day');
             //create Drive File and store id
             $file_content = $this->input->post('a_content');
-            $file_id = NULL;
-            $file_url = NULL;
-            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, $file_id, $file_url)){
+            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, 'txt', $file_content)){
                 redirect('tutor/manage_assessments');
             } else {
                 die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_html','here') .' to try again!');
@@ -123,29 +121,28 @@ class Tutor extends CI_Controller {
             
             $file_extension = $this->input->post('a_ext');
             $file_path = FCPATH . 'assets/uploads/';
-            $file_name = $this->input->post('a_name') .'.'. $file_extension;
+            $file_name = str_replace(' ', '_', $this->input->post('a_name') .'.'. $file_extension);
+            
             // Upload file to server for later reference
             
             $config['upload_path'] = $file_path;
-            $config['allowed_types'] = 'doc|pdf';
+            $config['allowed_types'] = 'doc|docx|pdf';
             $config['remove_spaces'] = TRUE;
             $config['overwrite'] = TRUE;
             $config['file_name'] = $file_name;
             $this->load->library('upload', $config);
             if ( ! $this->upload->do_upload('a_upload')){
                 $error = array('error' => $this->upload->display_errors());
-                var_dump($error);
+                die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_upload','here') .' to try again!');
                 exit;
             }
             
             //create Drive File and store id
             $file_content = file_get_contents($file_path . $file_name);
-            $file_id = NULL;
-            $file_url = NULL;
-            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $file_id, $file_url)){
+            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, $file_extension, $file_content)){
                 redirect('tutor/manage_assessments');
             } else {
-                die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_html','here') .' to try again!');
+                die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_upload','here') .' to try again!');
             }
         } else {
 
@@ -291,10 +288,9 @@ class Tutor extends CI_Controller {
     function _remove_email_duplicates($email_str){
         $r = explode(',',$email_str);
         foreach($r as $key => $value){
-            if(is_valid_tutor(trim($value)) === FALSE){
-                if(is_valid_student(trim($value))){
-                    $tv[] = trim($value);
-                }
+            $email_address = trim($value);
+            if(is_valid_tutor($email_address) === FALSE && is_valid_student($email_address)){
+                $tv[] = $email_address;
             }
         }
         // Remove Duplicates and stich back email string

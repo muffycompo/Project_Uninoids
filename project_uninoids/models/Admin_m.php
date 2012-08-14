@@ -69,7 +69,7 @@ class Admin_m extends CI_Model {
 		}
 		$role_id = $this->db->select('role_id')->where('email_address',$tutor_email)->limit(1)->get('users')->row(0)->role_id;
 		if($role_id == 1){
-			$this->db->where('role_id',$role_id)->update('users',array('role_id' => 2));
+			$this->db->where('role_id',$role_id)->where('email_address',$tutor_email)->update('users',array('role_id' => 2));
 			if($this->db->affected_rows() < 1){ return FALSE; }
 		}
 		
@@ -101,11 +101,12 @@ class Admin_m extends CI_Model {
 			}
 	}
 	
-	public function deleteTutor($tutor_email){
+	public function deleteTutor($id, $tutor_email){
 		if(! empty($tutor_email)){
-			$rs = $this->db->where('email_address', $tutor_email)->update('users', array('role_id' => 1));
+			$this->db->where('email_address', $tutor_email)->update('users', array('role_id' => 1));
 			if($this->db->affected_rows() > 0){
-				return TRUE;
+                            $this->db->where('tutor_id', $id)->where('tutor_email', $tutor_email)->delete('tutors');
+                            if($this->db->affected_rows() > 0){return TRUE; } else { return FALSE;}
 			} else {
 				return FALSE;
 			}

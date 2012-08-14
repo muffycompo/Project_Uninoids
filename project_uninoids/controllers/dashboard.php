@@ -126,8 +126,8 @@ class Dashboard extends CI_Controller {
 		    // Set the parent folder.
 		    if ($inputFile['parentId'] != null) {
 		      	$parent = new Google_ParentReference();
-			    $parent->setId($inputFile['parentId']);
-			    $newfile->setParents(array($parent));
+                        $parent->setId($inputFile['parentId']);
+                        $newfile->setParents(array($parent));
 		    }
 			
 			// files.insert
