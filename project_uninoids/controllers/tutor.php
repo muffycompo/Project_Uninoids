@@ -25,7 +25,7 @@ class Tutor extends CI_Controller {
 	}
 	
     public function manage_lg(){
-        $listLgs = $this->Tutor_m->listLg();
+        $listLgs = $this->Tutor_m->listLg($this->session->userdata('email_address'),'');
         if($listLgs !== FALSE){
             $v_data['learning_groups'] = $listLgs;
         } else {
@@ -139,6 +139,7 @@ class Tutor extends CI_Controller {
             
             //create Drive File and store id
             $file_content = file_get_contents($file_path . $file_name);
+            //$a_name, $a_description, $lg_id, $start_date, $due_date, $ext, $content;
             if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, $file_extension, $file_content)){
                 redirect('tutor/manage_assessments');
             } else {

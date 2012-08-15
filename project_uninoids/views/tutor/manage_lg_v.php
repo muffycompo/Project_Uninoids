@@ -3,7 +3,6 @@
 	
 	<div id="body">
 		<p><strong>List of Available Learning Groups</strong> | <?php echo anchor('tutor/add_lg','Add New Learning Group'); ?></p> 
-
 		<table style="width: 800px">
 			<thead>
 				<tr>

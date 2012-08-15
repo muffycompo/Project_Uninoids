@@ -72,11 +72,16 @@ class Tutor_m extends CI_Model {
 	}
 
 	
-	public function listLg($id = ''){
+	public function listLg($tutor_email, $id = ''){
 	    if(! empty($id)){
 	        $rs = $this->db->where('lg_id', $id)->get('learning_groups');
 	    } else {
-	        $rs = $this->db->order_by('lg_id','DESC')->get('learning_groups');
+	        $rs = $this->db->select('lg_id,lg_name,student_list,tutors.tutor_id')
+                            ->from('learning_groups')
+                            ->join('tutors','learning_groups.tutor_id=tutors.tutor_id','inner')
+                            ->where('tutor_email',$tutor_email)
+                            ->order_by('lg_id','DESC')
+                            ->get();
 	    }
 	    if($rs->num_rows() > 0){
 	        return $rs->result();
@@ -172,11 +177,11 @@ class Tutor_m extends CI_Model {
 			$permission->setValue($group_id); // The email address or domain name for the entity
 			$permission->setType('group'); // "user", "group", "domain" or "default"
 			$permission->setRole('reader'); // "owner", "writer" or "reader"
-//			$permission->setAdditionalRoles(array('commenter')); // array('commenter')
+			$permission->setAdditionalRoles(array('commenter')); // array('commenter')
 
                         // Set Permission and Notify Group with Email
 //                        $t_permission = $drive->permissions->insert($file_id, $permission, array('sendNotificationEmails' => TRUE));
-                        $drive->permissions->insert($file_id, $permission);
+                        $drive->permissions->insert($file_id, $permission, array('sendNotificationEmails' => TRUE));
                         
 //                        var_dump($t_permission);
 //                        exit;
@@ -238,12 +243,15 @@ class Tutor_m extends CI_Model {
                                     ->row(0)->lg_folder_reference;
                             
                             $file_id = $this->db->select('a_file_id')->where('a_id',$id)->limit(1)->get('assessments')->row(0)->a_file_id;
-                            $fname = $this->db->select('a_name')->where('a_id',$id)->limit(1)->get('assessments')->row(0)->a_name;
-                            $file_name = str_replace(' ', '_', $fname);
-                            $full_file_path_name = FCPATH . 'assets/uploads/' . $file_name;
+                            $dir_name = FCPATH . 'assets/uploads/';                            
                             
                             // Delete Physical Uploaded File
-                            unlink($full_file_path_name);
+                            // TODO: Find a way to get the file extension
+                            if(is_dir($dir_name)){
+                                rmdir($dir_name); // Delete Directory
+                                mkdir($dir_name); // Create Directory
+                            }
+
                             try {
                                 // Delete the assessment file from Learning Group Folder
                                 $drive->children->delete($folder_id, $file_id);
