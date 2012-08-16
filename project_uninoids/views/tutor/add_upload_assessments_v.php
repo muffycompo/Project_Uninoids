@@ -16,7 +16,7 @@
 		</p>
 		
 		<p>
-			<label>Assessment File (Only .pdf and .doc allowed)<span style="color: red;">*</span></label><br />
+			<label>Assessment File (Only pdf, doc and docx allowed)<span style="color: red;">*</span></label><br />
 			<?php echo form_upload('a_upload'); ?>
 		</p>
 		

@@ -28,11 +28,11 @@ function _expand_curriculum_name($curriculum_id){
 
 function expand_lg_name($lg_id){
     $c =& get_instance();
-    return $c->db->select('lg_name')
-    ->where('lg_id', $lg_id)
-    ->get('learning_groups')
-    ->row(0)
-    ->lg_name;
+    $r = $c->db->select('lg_name')
+        ->where('lg_id', $lg_id)
+        ->get('learning_groups');
+    if($r->num_rows() > 0){return $r->row(0)->lg_name;} else {return '';}
+    
 }
 
 function expand_assessment_name($a_id){
@@ -88,7 +88,8 @@ function expand_lg_id_from_assessment($assessment_id){
 function expand_assessment_id_from_lg($lg_id){
 	$c =& get_instance();
 	if(! empty($lg_id)){
-		return $c->db->select('a_id')->where('lg_id', $lg_id)->limit(1)->get('assessments')->row(0)->a_id;
+             $r = $c->db->select('a_id')->where('lg_id', $lg_id)->limit(1)->get('assessments');
+             if($r->num_rows() > 0){return $r->row(0)->a_id;} else {return '';}
 	} else {
 		return '';
 	}

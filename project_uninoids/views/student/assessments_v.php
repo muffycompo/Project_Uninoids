@@ -8,7 +8,7 @@
 			<thead>
 				<tr>
 					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Title</th>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Description</th>
+<!--					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Description</th>-->
 					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Tutor</th>
 					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Learning Group</th>
 					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Start Date</th>
@@ -21,7 +21,7 @@
 				<?php foreach($assessments as $assessment) : ?>
 				<tr>
 					<td style="border: 1px solid #3e3e3e;"><?php echo $assessment->a_name; ?></td>
-					<td style="border: 1px solid #3e3e3e;"><?php echo $assessment->a_description; ?></td>
+					<!--<td style="border: 1px solid #3e3e3e;"><?php //echo $assessment->a_description; ?></td>-->
 					<td style="border: 1px solid #3e3e3e;"><?php echo expand_tutor_name_from_email(tutor_email_from_id(expand_tutor_id_from_lg(expand_lg_id_from_assessment($assessment->a_id)))); ?></td>
 					<td style="border: 1px solid #3e3e3e;"><?php echo expand_lg_name(expand_lg_id_from_assessment($assessment->a_id)); ?></td>
 					<td style="border: 1px solid #3e3e3e;"><?php echo uninoids_date($assessment->a_start_date); ?></td>

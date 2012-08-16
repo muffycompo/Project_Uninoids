@@ -62,7 +62,7 @@ class Tutor extends CI_Controller {
 
     public function lg_action($action, $id){
         if($action == 'sl'){
-            $details = $this->Tutor_m->listLg($id);
+            $details = $this->Tutor_m->listLg($this->session->userdata('email_address'),$id);
             if($details !== FALSE){
                 $v_data['student_lists'] = $details;
             } else {
@@ -121,7 +121,7 @@ class Tutor extends CI_Controller {
             
             $file_extension = $this->input->post('a_ext');
             $file_path = FCPATH . 'assets/uploads/';
-            $file_name = str_replace(' ', '_', $this->input->post('a_name') .'.'. $file_extension);
+            $file_name = clean_title(str_replace(' ', '_', $this->input->post('a_name') .'.'. $file_extension));
             
             // Upload file to server for later reference
             
@@ -198,7 +198,7 @@ class Tutor extends CI_Controller {
     
     public function grade_action($action, $id){
         if($action == 'scores'){
-            $details = $this->Tutor_m->listLg($id);
+            $details = $this->Tutor_m->listLg($this->session->userdata('email_address'),$id);
             if($details !== FALSE){
                 $v_data['student_lists'] = $details;
             } else {
@@ -209,7 +209,7 @@ class Tutor extends CI_Controller {
             $this->load->view('layout/layout', $v_data);
             
         } else if($action == 'edit'){
-            $details = $this->Tutor_m->listLg($id);
+            $details = $this->Tutor_m->listLg($this->session->userdata('email_address'),$id);
             if($details !== FALSE){
                 $v_data['student_lists'] = $details;
             } else {

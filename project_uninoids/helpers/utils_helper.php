@@ -201,11 +201,12 @@ function grade_from_score($score, $letter_grade = FALSE){
 function result_status($a_id){
     $c =& get_instance();
     if(! empty($a_id)){
-        return $c->db->select('status')
+        $r = $c->db->select('status')
             ->where('a_id', $a_id)
             ->limit(1)
-            ->get('grades')
-            ->row(0)->status;
+            ->get('grades');
+            
+        if($r->num_rows() > 0){return $r->row(0)->status;} else {return '';}
     }
 }
 
@@ -236,4 +237,15 @@ function is_logged_in(){
     } else {
         return FALSE;
     }
+}
+
+function delete_dir($path){
+    $traversal = is_file($path) ? @unlink($path) : array_map(__FUNCTION__, glob($path.'/*')) == @rmdir($path);
+    if(!is_dir($path)){mkdir($path);}
+    return $traversal;
+}
+
+function clean_title($string){  
+    // Replace other special chars  
+    return str_replace( array( '\'', '"', ',' , ';', '<', '>','+','=','`','~','/','%','@','*','!','(',')','&' ), '', $string);
 }

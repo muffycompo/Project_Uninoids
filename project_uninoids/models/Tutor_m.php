@@ -74,7 +74,14 @@ class Tutor_m extends CI_Model {
 	
 	public function listLg($tutor_email, $id = ''){
 	    if(! empty($id)){
-	        $rs = $this->db->where('lg_id', $id)->get('learning_groups');
+//	        $rs = $this->db->where('lg_id', $id)->get('learning_groups');
+                $rs = $this->db->select('lg_id,lg_name,student_list,tutors.tutor_id')
+                            ->from('learning_groups')
+                            ->join('tutors','learning_groups.tutor_id=tutors.tutor_id','inner')
+                            ->where('tutor_email',$tutor_email)
+                            ->where('lg_id',$id)
+                            ->order_by('lg_id','DESC')
+                            ->get();
 	    } else {
 	        $rs = $this->db->select('lg_id,lg_name,student_list,tutors.tutor_id')
                             ->from('learning_groups')
@@ -151,8 +158,9 @@ class Tutor_m extends CI_Model {
                         else if($ext == 'docx'){$mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';} 
                         else if($ext == 'pdf'){$mimeType = 'application/pdf';} 
                         else {$mimeType = 'text/plain';}
-                        
-                        $drive_file_name = str_replace(' ', '_', $a_name) . '.' .$ext;
+//                        $dName = urlencode(str_replace(' ', '_', $a_name));
+                        $dName = str_replace(' ', '_', $a_name);
+                        $drive_file_name =  clean_title($dName). '.' .$ext;
                         $newfile = new Google_DriveFile();
                         $newfile->setTitle($drive_file_name);
                         $newfile->setDescription($a_description);
@@ -197,7 +205,7 @@ class Tutor_m extends CI_Model {
                     $s_date = new DateTime($start_date);
                     $d_date = new DateTime($due_date);
                     $assessments_array = array(
-                            'a_name' => $a_name,
+                            'a_name' => clean_title($a_name),
                             'a_description' => $a_description,
                             'a_file_id' => $file_id,
                             'a_file_url' => $file_url,
@@ -247,10 +255,10 @@ class Tutor_m extends CI_Model {
                             
                             // Delete Physical Uploaded File
                             // TODO: Find a way to get the file extension
-                            if(is_dir($dir_name)){
-                                rmdir($dir_name); // Delete Directory
-                                mkdir($dir_name); // Create Directory
-                            }
+//                            if(is_dir($dir_name)){
+//                                rmdir($dir_name); // Delete Directory
+//                                mkdir($dir_name); // Create Directory
+//                            }
 
                             try {
                                 // Delete the assessment file from Learning Group Folder
