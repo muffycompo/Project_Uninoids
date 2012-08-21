@@ -8,10 +8,10 @@
 
 function expand_curriculum_status($status_code){
 	switch($status_code){
-		case 0:
+		case 1:
 			return 'Inactive';
 			break;
-		case 1:
+		case 2:
 			return 'Active';
 			break;
 	}
