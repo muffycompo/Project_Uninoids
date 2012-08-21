@@ -52,7 +52,7 @@ COLLATE = latin1_general_ci;
 CREATE  TABLE IF NOT EXISTS `uninoids`.`curriculums` (
   `curriculum_id` INT(11) NOT NULL AUTO_INCREMENT ,
   `curriculum_name` VARCHAR(128) CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NULL DEFAULT NULL ,
-  `status` ENUM('0','1') CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NOT NULL DEFAULT '1' ,
+  `status` ENUM('1','2') CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NOT NULL DEFAULT '1' ,
   PRIMARY KEY (`curriculum_id`) )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1

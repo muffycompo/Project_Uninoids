@@ -44,14 +44,25 @@ function is_valid_student($student_email){
 function curriculum_dropdown($name='lg_curiculum', $tutor_email = '', $selected=NULL){
 	$c =& get_instance();
 	
-	if(!empty($tutor_email)){
+	if($c->session->userdata('role_id') == 3){
+		if(!empty($tutor_email)){
 	    $rs = $c->db->select('curriculums.curriculum_id,curriculums.curriculum_name')
 	        ->join('tutors','curriculums.curriculum_id=tutors.curriculum_id','inner')
 	        ->where('tutor_email', $tutor_email)
-	        ->where('curriculums.status', 1)
-                ->get('curriculums');
+            ->get('curriculums');
+		} else {
+		    $rs = $c->db->select('curriculum_id,curriculum_name')->get('curriculums');
+		}
 	} else {
-	    $rs = $c->db->select('curriculum_id,curriculum_name')->where('status', 1)->get('curriculums');
+		if(!empty($tutor_email)){
+	    $rs = $c->db->select('curriculums.curriculum_id,curriculums.curriculum_name')
+	        ->join('tutors','curriculums.curriculum_id=tutors.curriculum_id','inner')
+	        ->where('tutor_email', $tutor_email)
+	        ->where('curriculums.status', 2)
+                ->get('curriculums');
+		} else {
+		    $rs = $c->db->select('curriculum_id,curriculum_name')->where('status', 2)->get('curriculums');
+		}
 	}
 	
 	if($rs->num_rows() > 0){

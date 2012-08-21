@@ -12,7 +12,7 @@
 		
 		<p>
 			<label>Status</label><br />
-			<?php echo form_dropdown('curriculum_status', array('0' => 'Inactive','1' => 'Active'), 1); ?>
+			<?php echo form_dropdown('curriculum_status', array('1' => 'Inactive','2' => 'Active'), 1); ?>
 		</p>
 		
 		<p><?php echo form_submit('submit_curriculum','Create Curriculum'); ?></p>
