@@ -10,7 +10,7 @@
 
 Mr. Mfawa Alfred Onen (PHP Backend Developer)
 
-Mr. Aderogba Otunla (User Interface/ User Experience Developer)
+Mr. Aderogba Otunla (User Interface/ User Experience/ PHP Developer)
 
 Dr. Peter M. Ogedebe (Project Manager)
 
