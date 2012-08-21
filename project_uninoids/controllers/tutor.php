@@ -31,6 +31,10 @@ class Tutor extends CI_Controller {
         } else {
             $v_data['learning_groups'] = NULL;
         }
+        $api_call = gplus_social_activities();
+        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+        $v_data['tweets'] = $api_call['tweets'];
+        $v_data['nav'] = 'lg';
         $v_data['layout'] = 'tutor/manage_lg_v';
         $this->load->view('layout/layout', $v_data);
     }
@@ -88,6 +92,10 @@ class Tutor extends CI_Controller {
         } else {
             $v_data['assessments'] = NULL;
         }
+        $api_call = gplus_social_activities();
+        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+        $v_data['tweets'] = $api_call['tweets'];
+        $v_data['nav'] = 'assessment';
         $v_data['layout'] = 'tutor/manage_assessments_v';
         $this->load->view('layout/layout', $v_data);
     }
@@ -170,6 +178,10 @@ class Tutor extends CI_Controller {
         } else {
             $v_data['grades'] = NULL;
         }
+        $api_call = gplus_social_activities();
+        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+        $v_data['tweets'] = $api_call['tweets'];
+        $v_data['nav'] = 'grade';
         $v_data['layout'] = 'tutor/manage_grades_v';
         $this->load->view('layout/layout', $v_data);
     }
@@ -265,6 +277,10 @@ class Tutor extends CI_Controller {
         } else {
             $v_data['certs'] = NULL;
         }
+        $api_call = gplus_social_activities();
+        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+        $v_data['tweets'] = $api_call['tweets'];
+        $v_data['nav'] = 'cert';
         $v_data['layout'] = 'tutor/manage_certificates_v';
         $this->load->view('layout/layout', $v_data);
     }

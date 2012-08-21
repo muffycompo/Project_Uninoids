@@ -8,7 +8,7 @@
 
 	<!-- Basic Page Needs -->
 	<meta charset="utf-8">
-	<title>CRYSTAL - Blog</title>
+	<title>UNINOIDS</title>
 	<meta name="description" content="Crystal Theme">
 	<meta name="author" content="Arlind Nushi and Arianit Selimaj">
 
@@ -24,6 +24,11 @@
 	<link rel="stylesheet" href="css/skeleton.css">
 	<link rel="stylesheet" href="css/crystal.css">
 	<link rel="stylesheet" href="css/layout.css">
+	<link rel="stylesheet" href="css/isotope.css">
+	
+		<!-- Pretty Photo -->
+		<link rel="stylesheet" href="js/prettyphoto/css/prettyPhoto.css">
+		
 
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -44,140 +49,46 @@
 
 	<!-- header -->
 	<div class="site_header"><!-- for tight version add class: tight -->
-	
-		<!-- top -->
-		<div class="bar_top">
-			
-			<div class="container">
-				
-				<div class="ten columns">
-					<!-- top left menu -->
-					<ul class="top_menu" data-title=":: Secondary Top Menu ::">
-						<li><a href="#rss">RSS Feeds</a></li>
-						<li><a href="#archives">Archive</a></li>
-					</ul>
-					<!-- end: top left menu -->
-				</div>
-				
-				<div class="six columns">
-					<!-- top right social networks -->
-					<ul class="top_social">
-						<li class="twitter"><a href="#">Twitter</a></li>
-						<li class="facebook"><a href="#">Facebook</a></li>
-						<li class="google_plus"><a href="#">Google+</a></li>
-						<li class="linked_in"><a href="#">LinkedIn</a></li>
-						<li class="youtube"><a href="#">YouTube</a></li>
-						<li class="rss"><a href="#">RSS 2.0</a></li>
-					</ul>
-					<!-- end: top right social networks -->
-				</div>
-				
-			</div>
-		
-		<!-- end: top -->
-		</div>
-		
+
 		<div class="site_header_separator"></div>
-		
+
 		<!-- site logo and main menu -->
 		<div class="site_logo_and_menu">
-			
+
 			<div class="container">
-			
+
 				<div class="six columns">
-				
+
 					<!-- site logo -->
 					<div class="site_logo">
 						<a href="index.html">
 							<img src="images/crystal.png" alt="crystal" align="bottom" />
 						</a>
-					
-						<span class="site_slogan">Just a site tagline</span>
 					<!-- end: site logo -->
 					</div>
-					
+
 				</div>
-				
+
 				<div class="ten columns">
-					
-					<!-- main menu -->
-					<ul class="main_menu" data-title=":: Crystal Main Nav ::">
-						
-						<li>
-							<a href="index.html">Home</a>
-							
-							<!-- sub menu -->
-							<ul>
-								<li><a href="index.html">AsyncSlider</a></li>
-								<li><a href="index-wideslider.html">Wide Slider</a></li>
-							<!-- end: sub menu -->
-							</ul>
-						</li>
-						<li>
-							<a href="portfolio.html">Portfolio</a>
-							
-							<!-- sub menu -->
-							<ul>
-								<li>
-									<a href="portfolio.html">Design</a>
-									
-									<!-- third level sub -->
-									<ul>
-										<li><a href="portfolio.html">Brochures</a></li>
-										<li><a href="portfolio.html">Catalogue</a></li>
-										<li><a href="portfolio.html">Flyers</a></li>
-										<li><a href="portfolio.html">Posters</a></li>
-										<li><a href="portfolio.html">Stickers</a></li>
-										<li><a href="portfolio.html">Billboards</a></li>
-									<!-- end of: third level sub -->
-									</ul>
-								
-								</li>
-								<li><a href="portfolio.html">Web Development</a></li>
-								<li><a href="portfolio.html">Graphic</a></li>
-								<li><a href="portfolio.html">Print</a></li>
-							<!-- end: sub menu -->
-							</ul>
-							
-						</li>
-						<li class="active"><a href="blog.html">Blog</a></li>
-						<li>
-							<a href="styles.html">Pages</a>
-							
-							<!-- sub menu -->
-							<ul>
-								<li><a href="styles.html">Typography</a></li>
-								<li><a href="staff.html">Staff Page</a></li>
-								<li><a href="blog-post.html">Blog Post</a></li>
-								<li><a href="portfolio-item.html">Portfolio Item</a></li>
-								<li><a href="portfolio-manual-pagination.html">Portfolio Manual Pagination</a></li>
-								<li><a href="404.html">404 Error</a></li>
-							<!-- end: sub menu -->
-							</ul>
-						</li>
-						<li><a href="contact.html">Contact</a></li>
-						
-					<!-- end: main menu -->
-					</ul>
-					
+                                    
 				</div>
-				
+
 			</div>
-			
-					
-			
+
+
+
 			<!-- mobile dropdown (will be automatically populated) -->
-			<div class="container" id="mobile_menu">
+<!--			<div class="container" id="mobile_menu">
 				<div class="sixteen columns">
-					
+
 				</div>
-			</div>
+			</div>-->
 			<!-- end: mobile dropdown -->
-			
+
 		<!-- end of: site logo and main menu -->
 		</div>
-		
-		
+
+
 	<!-- end: header -->
 	</div>
 	
@@ -186,297 +97,11 @@
 	<!-- main content -->
 	<div class="content container">
 		
-		
-		<div class="twelve columns">
-			<!-- breadcrumb -->
-			<div class="breadcrumb">
-				
-				<div>You are here:</div>
-				
-				<a href="#">Home</a> &raquo;
-				<a href="blog.html">Blog</a>
-				
-			<!-- end: breadcrumb -->
-			</div>
-		</div>
-		
-		<div class="four columns">
-			<!-- blog search bar -->
-			<form method="get" name="blogsearch" class="search_bar">
-				<input type="text" class="search" id="search" name="search" placeholder="Search…" />
-			<!-- end: blog search bar -->
-			</form>
-		</div>
-		
-		
-		<div class="sixteen columns">
-			<!-- outer content title -->
-			<h2 class="title">Our Blog</h2>
-			<!-- end: outer content title -->
-		</div>
-		
-		
 		<!-- blog posts -->
 		<div class="twelve columns blog_type_1">
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_01.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
-				
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_02.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
-				
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_03.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
-				
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_04.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
-				
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_05.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
-				
-				
-				<!-- post entry -->
-				<div class="post_entry">
-				
-					<!-- post block -->
-					<div class="post_block">
-					
-						<div class="post_inner">
-							<a href="blog-post.html" class="post_image">
-								<img src="images/blog_image_01.png" />
-								
-								<div class="post_date">
-									<span>FEB</span>
-									<span class="date">24</span>
-								</div>
-							</a>
-							
-							
-							<a href="blog-post.html" class="post_title">Hotel Pandemonium is an interactive illustrated book</a>
-							
-							<div class="post_content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-							</div>
-						</div>
-						
-						<!-- post details -->
-						<div class="post_details">
-							<a href="#" class="post_author">Admin</a>
-							
-							<div class="post_categories">
-								<a href="#">Inspiration</a>
-							</div>
-						<!-- end: post details -->	
-						</div>
-					
-					<!-- end: post block -->
-					</div>
-					
-				<!-- end: post entry -->
-				</div>
-				
-				
+                    
 				<!-- pagination -->
-				<div class="pagination">
+<!--				<div class="pagination">
 					<a href="#"><img src="images/pagination_arrow_left.png" alt="left" /></a>
 					<a href="#">1</a>
 					<a href="#">2</a>
@@ -488,188 +113,10 @@
 					<a href="#">30</a>
 					<a href="#">45</a>
 					<a href="#"><img src="images/pagination_arrow_right.png" alt="right" /></a>
-				</div>
+				</div>-->
 				<!-- end: pagination -->
 				
 		<!-- end: blog posts -->
-		</div>
-		
-		
-		<!-- widgets sidebar (modules) -->
-		<div class="four columns iphone_nopadding">
-			
-			<!-- blog categories -->
-			<div class="module">
-				<div class="module_inner">
-					<h2 class="module_title">Blog Categories</h2>
-					
-					<ul>
-						<li><a href="#">Design</a></li>
-						<li><a href="#">Web Development</a></li>
-						<li><a href="#">Graphic</a></li>
-						<li><a href="#">Print</a></li>
-						<li><a href="#">Branding</a></li>
-					</ul>
-				</div>
-			<!-- end: blog categories -->
-			</div>
-			
-			<!-- tabbed content (popular posts) -->
-			<div class="module">
-				<div class="module_inner tabs">
-				
-					<div class="tabbed">
-						<a href="#popular" class="active">Popular</a>
-						<a href="#recent">Recent</a>
-					</div>
-					
-					<div class="tab_padding">
-						<div class="tab_content" id="popular">
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-						</div>
-						
-						<div class="tab_content" id="recent">
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-							<!-- featured post -->
-							<div class="featured_post">
-								<img src="images/post_thumbnail.png" alt="post_thumbnail" />
-								
-								<div>
-									<a href="#">Hotel Pandemonium is an interactive</a>
-									<span>10 October 2012</span>
-								</div>
-							<!-- end: featured post -->
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			<!-- end: tabbed content -->
-			</div>
-			
-			<!-- testimonials -->
-			<div class="module">
-				<div class="module_inner">
-					<h2 class="module_title">Testimonials</h2>
-					
-					<div class="module_content">
-					
-						<ul class="testimonials" data-autoswitch="1" data-timeout="3.5">
-							<li data-author="Jeremy H.">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmoad tempor incididunt ut labore et dolore magsdna</li>
-							<li data-author="Adele K.">Consectetur adipisicing elit, sed do eiusmoad tempor incididunt ut labore et dolore magsdna</li>
-							<li data-author="John Doe">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram</li>
-						</ul>
-						
-					</div>
-				</div>
-			<!-- end: testimonials -->
-			</div>
-			
-			
-			<!-- tags -->
-			<div class="module">
-				<div class="module_inner">
-					<h2 class="module_title">Tags</h2>
-					
-					<div class="module_content">
-						
-						<ul class="tags">
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Icons</span> <span class="a_btn_slide_text">2</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Design</span> <span class="a_btn_slide_text">19</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Grid</span> <span class="a_btn_slide_text">7</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Typography</span> <span class="a_btn_slide_text">4</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Illustration</span> <span class="a_btn_slide_text">11</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" class="a_btn">
-									<span class="a_btn_text">Iphone</span> <span class="a_btn_slide_text">1</span> <span class="a_btn_icon_right">&nbsp;</span>
-								</a>
-							</li>
-						</ul>
-						
-					</div>
-				</div>
-			<!-- end: tags -->
-			</div>
-			
-			
-		<!-- end: widgets sidebar -->
 		</div>
 		
 		
@@ -679,93 +126,9 @@
 	
 	
 	
-	<!-- footer -->
+    <!-- footer -->
 	<div class="site_footer">
-		
-		<!-- top part of footer -->
-		<div class="footer_top">
-		
-			<div class="site_footer_separator"></div>
 			
-			<div class="container">
-			
-				<!-- footer blog posts -->
-				<div class="four columns">
-					
-					<h2 class="footer_heading">Archives</h2>
-					
-					<!-- blog archives -->
-					<ul>
-						<li><a href="#">Art History (1)</a></li>
-						<li><a href="#">Philosofy (6)</a></li>
-						<li><a href="#">Photografy (3)</a></li>
-						<li><a href="#">Running (4)</a></li>
-						<li><a href="#">ThemeForest (2)</a></li>
-						<li><a href="#">Kosovo (5)</a></li>
-					<!-- end: blog archives -->
-					</ul>
-					
-				<!-- end: footer blog posts -->
-				</div>
-				
-				
-				<!-- footer twitter timeline -->
-				<div class="four columns">
-					
-					<h2 class="footer_heading">Twitter</h2>
-					
-					
-					<ul class="tweets" data-timeout="5" data-tweets="2">
-						<li><a href="#">@crystaltheme</a> Sed ut perspiciatis  de omnis iste natus voluptatem accusantium&#8230;</li>
-						<li><a href="#">@crystaltheme</a> Sed ut perspiciatis  de omnis iste natus voluptatem accusantium&#8230;</li>
-						<li><a href="#">@crystaltheme</a> Sed ut perspiciatis  de omnis iste natus voluptatem accusantium&#8230;</li>
-						<li><a href="#">@crystaltheme</a> Sed ut perspiciatis  de omnis iste natus voluptatem accusantium&#8230;</li>
-					</ul>
-					
-				<!-- end: footer twitter timeline -->
-				</div>
-				
-				
-				<!-- footer blog posts -->
-				<div class="four columns">
-					
-					<h2 class="footer_heading">Photo Stream</h2>
-					
-					<div class="photostream">
-						<a href="#"><img src="images/sample_image_01.png" alt="sample_image_01" /></a>
-						<a href="#"><img src="images/sample_image_02.png" alt="sample_image_02" /></a>
-						<a href="#"><img src="images/sample_image_03.png" alt="sample_image_03" /></a>
-						<a href="#"><img src="images/sample_image_03.png" alt="sample_image_03" /></a>
-						<a href="#"><img src="images/sample_image_04.png" alt="sample_image_04" /></a>
-						<a href="#"><img src="images/sample_image_01.png" alt="sample_image_01" /></a>
-						
-						<a href="#"><img src="images/sample_image_03.png" alt="sample_image_01" /></a>
-						<a href="#"><img src="images/sample_image_04.png" alt="sample_image_02" /></a>
-						<a href="#"><img src="images/sample_image_04.png" alt="sample_image_03" /></a>
-						<a href="#"><img src="images/sample_image_01.png" alt="sample_image_03" /></a>
-						<a href="#"><img src="images/sample_image_03.png" alt="sample_image_04" /></a>
-						<a href="#"><img src="images/sample_image_02.png" alt="sample_image_01" /></a>
-					</div>
-					
-				<!-- end: footer blog posts -->
-				</div>
-				
-				
-				<!-- footer text widget -->
-				<div class="four columns">
-					
-					<h2 class="footer_heading">Text Widget</h2>
-					
-					<p>Praesent cursus augue sed dui condimentum bibendum. Pellentesque iaculis diam ut risus laoreet eget aliquet purus condimentum. Integer sit amet semper arcu. Phasellus ac ante cursus diam interdum tempor eu sit amet ipsum.</p>
-				<!-- end: footer text widget -->
-				</div>
-			
-			</div>
-			
-		<!-- end: top part of footer -->
-		</div>
-		
-		
 		<!-- bottom part of footer -->
 		<div class="footer_bottom">
 			
@@ -806,15 +169,23 @@
 
 	<!-- JS Footer Scripts -->
 	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.transit.js"></script>
+	<script src="js/jquery.isotope.min.js"></script>
+	<script src="js/prettyphoto/jquery.prettyPhoto.js"></script>
+	<script src="js/jquery.infinitescroll.js"></script>
 	<script src="js/hover.zoom.js"></script>
+	<script src="js/jquery.selectbox-0.1.3.min.js"></script>
 	<script src="js/jquery.winres.js"></script>
+	<script src="js/jquery.ancarousel.js"></script>
+	<script src="js/jquery.featurestabs.js"></script>
+	<script src="js/jquery.asyncslider.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/mobile-menu.js"></script>
 	<script src="js/media-helper.js"></script>
 	<script src="js/tabs.js"></script>
 	
 	<!-- style switcher -->
-	<script src="js/style-switcher.js"></script>
+	<!--<script src="js/style-switcher.js"></script>-->
 	
 </body>
 </html>

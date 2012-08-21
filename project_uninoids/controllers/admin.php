@@ -31,6 +31,10 @@ class Admin extends CI_Controller {
 		} else {
 			$v_data['curriculums'] = NULL;
 		}
+                $api_call = gplus_social_activities();
+                $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                $v_data['tweets'] = $api_call['tweets'];
+                $v_data['nav'] = 'curriculum';
 		$v_data['layout'] = 'admin/manage_curriculum_v';
 		$this->load->view('layout/layout', $v_data);
 	}
@@ -65,6 +69,10 @@ class Admin extends CI_Controller {
 		} else {
 			$v_data['tutors'] = NULL;
 		}
+                $api_call = gplus_social_activities();
+                $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                $v_data['tweets'] = $api_call['tweets'];
+                $v_data['nav'] = 'tutor';
 		$v_data['layout'] = 'admin/manage_tutors_v';
 		$this->load->view('layout/layout', $v_data);		
 	}
@@ -139,6 +147,10 @@ class Admin extends CI_Controller {
 		} else {
 			$v_data['study_materials'] = NULL;
 		}
+                $api_call = gplus_social_activities();
+                $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                $v_data['tweets'] = $api_call['tweets'];
+                $v_data['nav'] = 'material';
 		$v_data['layout'] = 'admin/manage_sm_v';
 		$this->load->view('layout/layout', $v_data);		
 	}

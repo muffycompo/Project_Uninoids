@@ -1,35 +1,48 @@
-<div id="container">
-	<h1>Manage Study Materials</h1>
-	
-	<div id="body">
-		<p><strong>List of Available Study Materials</strong> | <?php echo anchor('admin/add_sm','Add Study Material'); ?></p> 
+<!-- main content -->
+<div class="content container">
 
-		<table style="width: 800px">
-			<thead>
-				<tr>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Title</th>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Curriculum</th>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php if($study_materials !== NULL) : ?>
-				<?php foreach($study_materials as $study) : ?>
-				<tr>
-					<td style="border: 1px solid #3e3e3e;"><?php echo anchor($study->sm_url,$study->sm_title); ?></td>
-					<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo _expand_curriculum_name($study->curriculum_id); ?></td>
-					<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo anchor('admin/sm_action/edit/' . $study->sm_id,'Edit'); ?>  | <?php echo anchor('admin/sm_action/delete/' . $study->sm_id,'Delete'); ?></td>
-				</tr>
-				<?php endforeach; ?>
-			<?php else : ?>
-				<tr>
-					<td style="border: 1px solid #3e3e3e;" colspan="3">No Study Material(s) available to display!</td>
-				</tr>
-			<?php endif; ?>
-			</tbody>
-		</table>
+    <!-- Add Dashboard Menu -->
+     <?php $this->load->view('partials/sidebar', array('name' => name_from_email($this->session->userdata('email_address')),'nav' => $nav)); ?>
+    		<!-- blog posts -->
+		<div class="twelve columns">
+			
+                    <h1>Manage Study Materials</h1>
+			
+                    <!-- add comment form -->
+                    <div class="cblock empty add_comment_form">
+                        <div class="uninoids_tbl">
+                            <table>
+                                <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Curriculum</th>
+                                            <th><?php echo anchor('admin/add_sm','Add Study Material','class="small_btn"'); ?></th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                <?php if($study_materials !== NULL) : ?>
+                                    <?php foreach($study_materials as $study) : ?>
+                                    <tr>
+                                        <td><?php echo anchor($study->sm_url,$study->sm_title,'target="_blank"'); ?></td>
+                                        <td><?php echo _expand_curriculum_name($study->curriculum_id); ?></td>
+                                        <td><?php echo anchor('admin/sm_action/edit/' . $study->sm_id,'Edit','class="small_btn"'); ?><?php echo anchor('admin/sm_action/delete/' . $study->sm_id,'Delete','class="small_btn"'); ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                        <tr>
+                                            <td colspan="3">No Study Material(s) available to display!</td>
 
-		<p><?php echo anchor('dashboard','<< Back') ?></p>
-	</div>
-	
+                                        </tr>
+                                <?php endif; ?>
+                                </tbody>
+                            </table>
+                      </div>
+                    <!-- end: add comment form -->
+                    </div>
+                    
+		<!-- end: blog posts -->
+		</div>
+    
+    
+    <!-- end: main content -->
 </div>

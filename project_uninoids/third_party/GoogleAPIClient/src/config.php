@@ -22,7 +22,7 @@ $apiConfig = array(
     'use_objects' => true,
   
     // The application_name is included in the User-Agent HTTP header.
-    'application_name' => 'Project Uninoids',
+    'application_name' => 'UNINOIDS',
 
     // OAuth2 Settings, you can get these keys at https://code.google.com/apis/console
     'oauth2_client_id' => '504693858372.apps.googleusercontent.com',

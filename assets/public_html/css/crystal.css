@@ -1758,6 +1758,10 @@ div.testimonials a.next {
 	padding: 0px 20px;
 }
 
+.blog_post .post_content_dash {
+	padding: 20px 20px 0px 20px;
+}
+
 /* Comments */
 .blog_post_comments {
 	border: 1px solid #ececec;
@@ -3310,4 +3314,63 @@ a.large:link,a.large:visited {
 
 .load_more_items,.load_more_items span {
 	text-shadow: 0px 1px 0px #FFF;
+}
+
+/* --------- Added for UNINOIDS --------- */
+.module ul li.active {
+    background-color: #F6F6F6;
+}
+
+.uninoids_tbl table {
+    width: 100%;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: normal;
+}
+
+.uninoids_tbl table thead th {
+    padding: 10px;
+    text-align: left;
+    background-color: #F6F6F6;
+    text-transform: uppercase;
+    border-bottom: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
+    font-size: 13px;
+    font-weight: bold;
+    
+}
+
+.uninoids_tbl table tbody td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #E7E7E7;
+    border-right: 1px solid #E7E7E7;
+    line-height: 1;
+}
+
+.uninoids_tbl table tbody tr:hover {
+    background-color: #FAFAFA;
+}
+
+a.small_btn {
+    font: 700 12px 'Open Sans', sans-serif;
+    /*float: left;*/
+    padding: 6px 10px;
+    margin-right: 6px;
+    color: #555;
+    border: 1px solid #D9D9D9;
+    text-shadow: 0 1px 1px #FFF;
+    background: #F8F8F8;
+
+    background: -webkit-linear-gradient(top, #F8F8F8 0%, #F1F1F1 100%);
+    background: -moz-linear-gradient(top, #F8F8F8 0%, #F1F1F1 100%);
+    background: -o-linear-gradient(top, #F8F8F8 0%, #F1F1F1 100%);
+    background: -ms-linear-gradient(top, #F8F8F8 0%, #F1F1F1 100%);
+    background: linear-gradient(top, #F8F8F8 0%, #F1F1F1 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8F8F8', endColorstr='#F1F1F1',GradientType=0 );
+
+    -webkit-box-shadow: inset 0px 1px 0px #FFF;
+    box-shadow: inset 0px 1px 0px #FFF;
+}
+a.small_btn:hover {
+    text-decoration: none;
 }

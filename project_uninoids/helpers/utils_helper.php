@@ -223,9 +223,9 @@ function certificate_status($a_id, $student_email){
     if(! empty($a_id)){
         $r = $c->db->where('a_id',$a_id)->where('user_email',$student_email)->limit(1)->get('certificates');
         if($r->num_rows() == 1){
-            return anchor('#','Print');
+            return anchor('#','Print','class="small_btn"');
         } else {
-            return 'Not Eligible';
+            return 'N/A';
         }
     }
 }
@@ -248,4 +248,76 @@ function delete_dir($path){
 function clean_title($string){  
     // Replace other special chars  
     return str_replace( array( '\'', '"', ',' , ';', '<', '>','+','=','`','~','/','%','@','*','!','(',')','&' ), '', $string);
+}
+
+function gplus_social_activities(){
+    // Include Gooogle API Client Initializer
+    require_once APPPATH . "third_party/api_init.php";
+    // Global Various
+    global $client;
+    global $plus;
+    $c =& get_instance();
+    $session_token = $c->session->userdata('token');
+    if (isset($session_token)) {
+        $client->setAccessToken($session_token);
+        if($client->getAccessToken()){
+            // Do some API calls passing the json_decoded callback string
+
+                try {
+                    //$me = $plus->people->get($c->session->userdata('user_id'));
+                } catch (Google_ServiceException $e){
+                    $me = '';
+                }
+                if(! empty($me)){
+                    // Check if we have activities in Cache
+                    if ($c->cache->file->get('gplus_activity_'.$c->session->userdata('user_id'))){
+                        $activities = $c->cache->file->get('gplus_activity_'.$c->session->userdata('user_id'));
+                    } else {
+                        try {
+                            $optParams = array('maxResults' => 5);
+                            $activities = $plus->activities->listActivities('me', 'public', $optParams);
+                            if($activities){
+                                // Save to Cache
+                                $c->cache->file->save('gplus_activity_'.$c->session->userdata('user_id'), $activities, $c->config->item('gplus_cache_ttl'));                                                                    
+                            }
+                        } catch (Exception $e) {
+                         $activities = '';   
+                        }
+
+                    }                        
+                }
+                
+            try {
+                $twitter_username = $c->Users_m->getTwitterUsername($c->session->userdata('user_id'));
+                $tusername = empty($twitter_username) ? 'googledevs' : $twitter_username;
+                $tweets = $c->twitter->timeline($tusername, 5);
+            } catch (Exception $e) {
+                $tweets = '';
+            }
+
+            $ra = array(
+                'gplus_feeds' => $activities,
+                'tweets' => $tweets);
+            
+            return $ra;
+          }
+        }
+}
+
+function name_from_email($email_address){
+    $c =& get_instance();
+    $rs = $c->db->select('first_name,last_name')->where('email_address',$email_address)->get('users');
+    if($rs->num_rows() > 0){
+        return $rs->row(0)->first_name . ' ' . $rs->row(0)->last_name;
+    } else {
+        return '';
+    }
+}
+
+function check_student_regno($user_id){
+    $c =& get_instance();
+    if(! empty($user_id)){
+        $r = $c->db->select('regno')->where('user_id',$user_id)->get('users');
+        if($r->num_rows() > 0){ return $r->row(0)->regno;} else {return FALSE;} 
+    }
 }

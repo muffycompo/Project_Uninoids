@@ -70,4 +70,23 @@ class Users_m extends CI_Model {
 			return FALSE;
 		}
 	}
+        
+        public function updateUserProfile($user_id, $matric_no = '',$twitter_username = ''){
+            if(!empty($matric_no) && !empty($twitter_username)){
+                $profile_array = array('regno' => $matric_no, 'twitter_username' => $twitter_username);
+            } elseif(!empty($matric_no)){
+                $profile_array = array('regno' => $matric_no);
+            } elseif(!empty($twitter_username)){
+                $profile_array = array('twitter_username' => $twitter_username);
+            } else { return FALSE; }
+            $this->db->where('user_id',$user_id)->update('users',$profile_array);
+            if($this->db->affected_rows() > 0){return TRUE;} else {return FALSE;}
+        }
+        
+        public function getTwitterUsername($user_id){
+            if(!empty($user_id)){
+                $rs = $this->db->select('twitter_username')->where('user_id', $user_id)->get('users');
+                if($rs->num_rows() > 0){ return $rs->row(0)->twitter_username;} else {return '';}
+            }
+        }
 }

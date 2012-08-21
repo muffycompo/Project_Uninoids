@@ -117,3 +117,17 @@ function expand_curriculum_from_id($tutor_id){
         return '';
     }
 }
+
+function expand_role_name($role_id){
+    $c =& get_instance();
+    if(! empty($role_id)){
+        $r = $c->db->select('role_name')->where('role_id', $role_id)->limit(1)->get('roles');
+        if($r->num_rows() > 0){
+            return  $r->row(0)->role_name;
+        } else {
+            return '';    
+        }
+    } else {
+        return '';
+    }
+}

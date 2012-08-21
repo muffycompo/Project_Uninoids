@@ -1,37 +1,52 @@
-<div id="container">
-	<h1>Manage Assessments</h1>
-	
-	<div id="body">
-		<p><strong>List of Assessments</strong> | <?php echo anchor('tutor/add_assessments_html','Create New Assessment'); ?> | <?php echo anchor('tutor/add_assessments_upload','Upload New Assessment'); ?></p> 
+<!-- main content -->
+<div class="content container">
 
-		<table style="width: 800px">
-			<thead>
-				<tr>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Title</th>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Learning Group</th>
-					<th style="border: 1px solid #3e3e3e; background-color: #cececa;">Action</th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php if($assessments !== NULL) : ?>
-				<?php foreach($assessments as $assessment) : ?>
-				<tr>
-					<td style="border: 1px solid #3e3e3e;"><?php echo $assessment->a_name; ?></td>
-					<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo expand_lg_name($assessment->lg_id); ?></td>
-					<td style="border: 1px solid #3e3e3e; text-align: center;"><?php echo anchor($assessment->a_file_url,'View','target="_blank"'); ?>  | <?php echo anchor('tutor/assessment_action/delete/' . $assessment->a_id,'Delete'); ?></td>
-				</tr>
-				<?php endforeach; ?>
-			<?php else : ?>
-				<tr>
-					<td style="border: 1px solid #3e3e3e;" colspan="3">No Assessments available to display!</td>
-				</tr>
-			<?php endif; ?>
-			</tbody>
-		</table>
+    <!-- Add Dashboard Menu -->
+     <?php $this->load->view('partials/sidebar', array('name' => name_from_email($this->session->userdata('email_address')),'nav' => $nav)); ?>
+    		<!-- blog posts -->
+		<div class="twelve columns">
+			
+                    <h1>Manage Assessments</h1>
+			
+                    <!-- add comment form -->
+                    <div class="cblock empty add_comment_form">
+                        <div class="uninoids_tbl">
+                            <table>
+                                <thead>
+                                        <tr>
+                                            <th>Assessment Title</th>
+                                            <th>Learning Group</th>
+                                            <th><?php echo anchor('tutor/add_assessments_html','New','class="small_btn"'); ?><?php echo anchor('tutor/add_assessments_upload','Upload','class="small_btn"'); ?></th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                <?php if($assessments !== NULL) : ?>
+                                    <?php foreach($assessments as $assessment) : ?>
+                                    <tr>
+                                        <td><?php echo $assessment->a_name; ?></td>
+                                        <td><?php echo expand_lg_name($assessment->lg_id); ?></td>
+                                        <td><?php echo anchor($assessment->a_file_url,'View','target="_blank" class="small_btn"'); ?><?php echo anchor('tutor/assessment_action/delete/' . $assessment->a_id,'Delete','class="small_btn"'); ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else : ?>
+                                        <tr>
+                                            <td colspan="3">No Assessments available to display!</td>
 
-		<p><em><strong>Note:</strong> You can only create one assessment per learning group</em></p>
-		
-		<p><?php echo anchor('dashboard','<< Back') ?></p>
-	</div>
-	
+                                        </tr>
+                                <?php endif; ?>
+                                </tbody>
+                            </table>
+                      </div>
+                        
+                      <div class="alert info"><strong>Info:</strong> You can only create one assessment per <strong>Learning Group</strong></div>
+
+                    <!-- end: add comment form -->
+                    </div>
+                    
+                    
+		<!-- end: blog posts -->
+		</div>
+    
+    
+    <!-- end: main content -->
 </div>
