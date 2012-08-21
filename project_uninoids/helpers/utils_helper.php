@@ -337,3 +337,13 @@ function check_student_regno($user_id){
         if($r->num_rows() > 0){ return $r->row(0)->regno;} else {return FALSE;} 
     }
 }
+
+function days_left($due_date){
+	date_default_timezone_set('Africa/Lagos');
+	$start_date = strtotime(date('Y-m-d')); // Today's Date
+	$end_date = $due_date; // Due date
+	
+	$days = floor(abs($end_date - $start_date) / 86400);
+	
+	return $days;
+}

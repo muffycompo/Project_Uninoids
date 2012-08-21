@@ -31,7 +31,7 @@
                                         <td><?php echo expand_tutor_name_from_email(tutor_email_from_id(expand_tutor_id_from_lg(expand_lg_id_from_assessment($assessment->a_id)))); ?></td>
                                         <td><?php echo expand_lg_name(expand_lg_id_from_assessment($assessment->a_id)); ?></td>
                                         <!--<td><?php //echo uninoids_date($assessment->a_start_date); ?></td>-->
-                                        <td><?php echo uninoids_date($assessment->a_due_date); ?></td>
+                                        <td><?php echo uninoids_date($assessment->a_due_date); ?> &nbsp; (<strong><?php echo days_left($assessment->a_due_date); ?></strong> days)</td>
                                         <td><?php echo anchor($assessment->a_file_url,'View','class="small_btn" target="_blank"'); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
