@@ -47,17 +47,22 @@ function curriculum_dropdown($name='lg_curiculum', $tutor_email = '', $selected=
 	if(!empty($tutor_email)){
 	    $rs = $c->db->select('curriculums.curriculum_id,curriculums.curriculum_name')
 	        ->join('tutors','curriculums.curriculum_id=tutors.curriculum_id','inner')
-	        ->where('tutor_email', $tutor_email)->get('curriculums');
+	        ->where('tutor_email', $tutor_email)
+	        ->where('curriculums.status', 1)
+                ->get('curriculums');
 	} else {
-	    $rs = $c->db->select('curriculum_id,curriculum_name')->get('curriculums');
+	    $rs = $c->db->select('curriculum_id,curriculum_name')->where('status', 1)->get('curriculums');
 	}
 	
 	if($rs->num_rows() > 0){
 		foreach($rs->result() as $option){
 			$options[$option->curriculum_id] = $option->curriculum_name;
 		}
-	}
-	return form_dropdown($name, $options, $selected);
+                return form_dropdown($name, $options, $selected);
+	} else {
+            return form_dropdown($name, array('' => 'No Curriculum'), $selected);
+        }
+	
 }
 
 function lg_dropdown($name='lg', $tutor_email = '', $selected=NULL){

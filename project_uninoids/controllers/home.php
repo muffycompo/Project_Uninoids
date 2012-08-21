@@ -19,14 +19,15 @@ class home extends CI_Controller {
 		$client->setApplicationName("UNINOIDS");
 		$client->setScopes(array(
                     'https://apps-apis.google.com/a/feeds/groups/',
-                    'https://www.googleapis.com/auth/drive',
+                    'https://www.googleapis.com/auth/drive.file',
+//                    'https://www.googleapis.com/auth/drive',
                     'https://www.googleapis.com/auth/userinfo.profile',
                     'https://www.googleapis.com/auth/userinfo.email',
                     'https://www.googleapis.com/auth/plus.me',
 		));
 		
-		//$limit_to_domain = 'binghamuni.edu.ng';
-		$limit_to_domain = '';
+		$limit_to_domain = 'binghamuni.edu.ng';
+		//$limit_to_domain = '';
 		
 		if ($client->getAccessToken()) {
                     // The access token may have been updated lazily.
