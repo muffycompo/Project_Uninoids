@@ -23,7 +23,7 @@ class Admin extends CI_Controller {
 		    redirect('dashboard');
 		}
 	}
-
+	
 	public function manage_curriculum(){
 		$listCurriculums = $this->Admin_m->listCurriculum();
 		if($listCurriculums !== FALSE){

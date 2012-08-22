@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-include_path=5;org.eclipse.dltk.USER_LIBRARY/CodeIgniter_Autocomplete\u00050;/Project Uninoids
+include_path=0;/Project Uninoids\u00055;org.eclipse.dltk.USER_LIBRARY/CI_Autocomplete
 use_asp_tags_as_php=false
