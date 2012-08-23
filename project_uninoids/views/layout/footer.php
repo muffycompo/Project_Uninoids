@@ -8,7 +8,7 @@
 				
 				<!-- copyrights section left -->
 				<div class="seven columns" id="copyrights">
-                                    &copy; Copyright <?php echo date('Y'); ?>. Designed by <?php echo anchor('#','Arianeet'); ?> and adopted for <?php echo anchor(base_url(),'UNINOIDS'); ?>
+                                    &copy; Copyright <?php echo date('Y'); ?>. Designed by <?php echo anchor('http://arianeet.deviantart.com/','Arianeet','target="_blank"'); ?> and adopted for <?php echo anchor(base_url(),'UNINOIDS'); ?>
 				<!-- end: copyrights section left -->
 				</div>
 				
@@ -16,7 +16,7 @@
 				<!-- copyrights section right -->
 				<div class="seven columns align_right" id="copyrights_secondary">
 					
-					Powered by <a href="#">WordPress</a>
+					Maintained by <?php echo anchor('http://www.binghamuni.edu.ng','Bingham University','target="_blank"'); ?>
 					
 				<!-- end: copyrights section right -->
 				</div>
@@ -59,9 +59,6 @@
 	<script src="<?php echo base_url(); ?>assets/public_html/js/mobile-menu.js"></script>
 	<script src="<?php echo base_url(); ?>assets/public_html/js/media-helper.js"></script>
 	<script src="<?php echo base_url(); ?>assets/public_html/js/tabs.js"></script>
-	
-	<!-- style switcher -->
-	<!--<script src="<?php //echo base_url(); ?>assets/public_html/js/style-switcher.js"></script>-->
 	
 </body>
 </html>

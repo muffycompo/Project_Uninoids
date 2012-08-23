@@ -25,13 +25,12 @@
                 </div>
 
                 <div class="five columns align_right">
-<!--                    <a href="#" class=""><span>Login to UNINOIDS</span></a>-->
                     <?php echo anchor($login_url,'<span>Login to UNINOIDS</span>','class="highlight_btn"'); ?>
 					
-				</div>
+		</div>
 				
-			<!-- end: slide entry 2 -->
-			</div>
+                <!-- end: slide entry 2 -->
+                </div>
 			
 		</div>
 		
@@ -66,92 +65,64 @@
 				<div class="item_block">
 					
 					<div class="padding">
-						<a href="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_large_01.png" class="item_image zoom" title="Portfolio Item 1">
-							<img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_01.png" alt="Some description" />
-						</a>
+                                            <img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_01.png" alt="Google Apps" />
+                                            <h2 class="item_title"><span>Teach and Learn with Google Apps</span></h2>
 						
-						<h2 class="item_title">
-							<a href="portfolio.html">Character Ilustration</a>
-						</h2>
-						
-						<p class="item_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+					  <p class="item_description">UNINOIDS helps in the flexible teaching, and learning of Google Apps.</p>
 					</div>
-					
 					
 				</div>
 			<!-- end: portfolio item -->
 			</div>
 			
-			
 			<!-- portfolio item -->
-			<div class="columns portfolio_item" data-filter="branding web">
+			<div class="columns portfolio_item" data-filter="design web">
 				
 				<div class="item_block">
 					
 					<div class="padding">
-						<a href="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_large_01.png" class="item_image zoom" title="Portfolio Item 2">
-							<img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_02.png" alt="Some description" />
-						</a>
+                                            <img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_02.png" alt="Google Products" />
+                                            <h2 class="item_title"><span>Teach and Learn about other Google products</span></h2>
 						
-						<h2 class="item_title">
-							<a href="portfolio.html">Behance</a>
-						</h2>
-						
-						<p class="item_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+					  <p class="item_description">UNINOIDS helps in the flexible teaching, and learning of other Google products.</p>
 					</div>
-					
 					
 				</div>
 			<!-- end: portfolio item -->
 			</div>
 			
-			
-			
-			
 			<!-- portfolio item -->
-			<div class="columns portfolio_item" data-filter="design branding">
+			<div class="columns portfolio_item" data-filter="design web">
 				
 				<div class="item_block">
 					
 					<div class="padding">
-						<a href="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_large_01.png" class="item_image zoom" title="Portfolio Item 3">
-							<img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_03.png" alt="Some description" />
-						</a>
+                                            <img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_03.png" alt="UNINOIDS" />
+                                            <h2 class="item_title"><span>Stay informed on UNINOIDS</span></h2>
 						
-						<h2 class="item_title">
-							<a href="portfolio.html">ThemeForest</a>
-						</h2>
-						
-						<p class="item_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+					  <p class="item_description">UNINOIDS helps to stay abreat with realtime access to your Gmail and Google+ while learning or teaching.</p>
 					</div>
-										
+					
 				</div>
 			<!-- end: portfolio item -->
 			</div>
 			
-			
-			
 			<!-- portfolio item -->
-			<div class="columns portfolio_item" data-filter="design branding">
+			<div class="columns portfolio_item" data-filter="design web">
 				
 				<div class="item_block">
 					
 					<div class="padding">
-						<a href="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_large_01.png" class="item_image zoom" title="Portfolio Item 4">
-							<img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_01.png" alt="Some description" />
-						</a>
+                                            <img src="<?php echo base_url(); ?>assets/public_html/images/portfolio_image_04.png" alt="Other Products" />
+                                            <h2 class="item_title"><span>Thinking of what more you can do with UNINOIDS?</span></h2>
 						
-						<h2 class="item_title">
-							<a href="portfolio.html">Classico</a>
-						</h2>
-						
-						<p class="item_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+					  <p class="item_description">UNINOIDS will not just restrict you to teaching and learning about Google products and services alone but also other courses as the institution deem fit...</p>
 					</div>
 					
 				</div>
 			<!-- end: portfolio item -->
 			</div>
-			
+						
 		<!-- end: portfolio items -->
 		</div>
 		

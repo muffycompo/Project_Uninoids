@@ -40,6 +40,9 @@ class Student extends CI_Controller {
 	    } else {
 	        $v_data['assessments'] = NULL;
 	    }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
             $v_data['nav'] = 'assessment';
 	    $v_data['layout'] = 'student/assessments_v';
 	    $this->load->view('layout/layout', $v_data);	    

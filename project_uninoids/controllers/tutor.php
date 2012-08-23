@@ -72,6 +72,10 @@ class Tutor extends CI_Controller {
             } else {
                 $v_data['student_lists'] = NULL;
             }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'lg';
             $v_data['learning_group_id'] = $id;
             $v_data['layout'] = 'tutor/lg_student_list_v';
             $this->load->view('layout/layout', $v_data);
@@ -104,16 +108,19 @@ class Tutor extends CI_Controller {
         if($this->input->post('submit_assessment')){
             // TODO: Do some validation
             //2012-08-10
-            $start_date = $this->input->post('start_year') .'-'. $this->input->post('start_month') .'-'. $this->input->post('start_day');;
             $due_date = $this->input->post('due_year') .'-'. $this->input->post('due_month') .'-'. $this->input->post('due_day');
             //create Drive File and store id
             $file_content = $this->input->post('a_content');
-            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, 'txt', $file_content)){
+            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $due_date, 'txt', $file_content)){
                 redirect('tutor/manage_assessments');
             } else {
                 die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_html','here') .' to try again!');
             }
         } else {
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'assessment';
             $v_data['layout'] = 'tutor/add_html_assessments_v';
             $this->load->view('layout/layout', $v_data);
         }
@@ -124,7 +131,6 @@ class Tutor extends CI_Controller {
         if($this->input->post('submit_assessment')){
             // TODO: Do some validation
             //2012-08-10
-            $start_date = $this->input->post('start_year') .'-'. $this->input->post('start_month') .'-'. $this->input->post('start_day');;
             $due_date = $this->input->post('due_year') .'-'. $this->input->post('due_month') .'-'. $this->input->post('due_day');
             
             $file_extension = $this->input->post('a_ext');
@@ -148,13 +154,16 @@ class Tutor extends CI_Controller {
             //create Drive File and store id
             $file_content = file_get_contents($file_path . $file_name);
             //$a_name, $a_description, $lg_id, $start_date, $due_date, $ext, $content;
-            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $start_date, $due_date, $file_extension, $file_content)){
+            if($this->Tutor_m->addAssessment($this->input->post('a_name'), $this->input->post('a_description'), $this->input->post('lg_id'), $due_date, $file_extension, $file_content)){
                 redirect('tutor/manage_assessments');
             } else {
                 die('An error occurred, please check back when we fix this issue or click '. anchor('tutor/add_assessments_upload','here') .' to try again!');
             }
         } else {
-
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'assessment';
             $v_data['layout'] = 'tutor/add_upload_assessments_v';
             $this->load->view('layout/layout', $v_data);
         }
@@ -216,6 +225,10 @@ class Tutor extends CI_Controller {
             } else {
                 $v_data['student_lists'] = NULL;
             }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'grade';
             $v_data['lg_id'] = $id;
             $v_data['layout'] = 'tutor/grade_score_v';
             $this->load->view('layout/layout', $v_data);
@@ -227,6 +240,10 @@ class Tutor extends CI_Controller {
             } else {
                 $v_data['student_lists'] = NULL;
             }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'grade';
             $v_data['lg_id'] = $id;
             $v_data['layout'] = 'tutor/grade_score_edit_v';
             $this->load->view('layout/layout', $v_data);
@@ -240,6 +257,10 @@ class Tutor extends CI_Controller {
             } else {
                 $v_data['student_lists'] = NULL;
             }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'grade';
             $v_data['lg_id'] = $lg_id;
             $v_data['layout'] = 'tutor/grade_score_edit_single_v';
             $this->load->view('layout/layout', $v_data);
@@ -250,6 +271,10 @@ class Tutor extends CI_Controller {
             } else {
                 $v_data['student_grade'] = NULL;
             }
+            $api_call = gplus_social_activities();
+            $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+            $v_data['tweets'] = $api_call['tweets'];
+            $v_data['nav'] = 'grade';
             $v_data['a_id'] = $id;
             $v_data['layout'] = 'tutor/grade_list_v';
             $this->load->view('layout/layout', $v_data);

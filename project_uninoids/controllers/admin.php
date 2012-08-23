@@ -56,6 +56,10 @@ class Admin extends CI_Controller {
 				}				
 			}
 		} else {
+                        $api_call = gplus_social_activities();
+                        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                        $v_data['tweets'] = $api_call['tweets'];
+                        $v_data['nav'] = 'curriculum';
 			$v_data['layout'] = 'admin/add_curriculum_v';
 			$this->load->view('layout/layout', $v_data);			
 		}
@@ -93,6 +97,10 @@ class Admin extends CI_Controller {
 			} else {
 				$v_data['curriculums'] = NULL;
 			}
+                        $api_call = gplus_social_activities();
+                        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                        $v_data['tweets'] = $api_call['tweets'];
+                        $v_data['nav'] = 'tutor';
 			$v_data['layout'] = 'admin/add_tutor_v';
 			$this->load->view('layout/layout', $v_data);		
 		}
@@ -106,6 +114,10 @@ class Admin extends CI_Controller {
 			} else {
 				$v_data['curriculums'] = NULL;
 			}
+                        $api_call = gplus_social_activities();
+                        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                        $v_data['tweets'] = $api_call['tweets'];
+                        $v_data['nav'] = 'curriculum';
 			$v_data['layout'] = 'admin/edit_curriculum_v';
 			$this->load->view('layout/layout', $v_data);
 		} else if($action == 'delete') {
@@ -126,6 +138,10 @@ class Admin extends CI_Controller {
 			} else {
 				$v_data['tutor_details'] = NULL;
 			}
+                        $api_call = gplus_social_activities();
+                        $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                        $v_data['tweets'] = $api_call['tweets'];
+                        $v_data['nav'] = 'tutor';
 			$v_data['layout'] = 'admin/tutor_details_v';
 			$this->load->view('layout/layout', $v_data);
 		} else if($action == 'delete') {
@@ -173,6 +189,10 @@ class Admin extends CI_Controller {
 	            }
 	        }
 	    } else {
+                $api_call = gplus_social_activities();
+                $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                $v_data['tweets'] = $api_call['tweets'];
+                $v_data['nav'] = 'material';
 	        $v_data['layout'] = 'admin/add_sm_v';
 	        $this->load->view('layout/layout', $v_data);
 	    }
@@ -187,6 +207,10 @@ class Admin extends CI_Controller {
 	        } else {
 	            $v_data['study_materials'] = NULL;
 	        }
+                $api_call = gplus_social_activities();
+                $v_data['gplus_feeds'] = $api_call['gplus_feeds'];
+                $v_data['tweets'] = $api_call['tweets'];
+                $v_data['nav'] = 'material';
 	        $v_data['layout'] = 'admin/sm_edit_v';
 	        $this->load->view('layout/layout', $v_data);
 	    } else if($action == 'delete') {

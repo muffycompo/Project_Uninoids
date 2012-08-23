@@ -33,7 +33,7 @@ class Student_m extends CI_Model {
 	public function listAssessments($email){
 	    if(! empty($email)){
 	        if($this->db->like('student_list',$email,'both')->get('learning_groups')->num_rows() > 0){
-                $rs = $this->db->select('a_id,a_name,a_description,a_file_url,a_start_date,a_due_date')
+                $rs = $this->db->select('a_id,a_name,a_description,a_file_url,a_due_date')
                                ->from('assessments')
                                ->join('learning_groups','assessments.lg_id=learning_groups.lg_id','inner')
                                ->like('learning_groups.student_list',$email,'both')

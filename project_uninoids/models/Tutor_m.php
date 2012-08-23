@@ -142,7 +142,7 @@ class Tutor_m extends CI_Model {
 	    
 	}
 
-	public function addAssessment($a_name, $a_description, $lg_id, $start_date, $due_date, $ext, $content){
+	public function addAssessment($a_name, $a_description, $lg_id, $due_date, $ext, $content){
 	    // Add Each Learning Group Student to file permission
             global $client;
             global $drive;
@@ -202,14 +202,12 @@ class Tutor_m extends CI_Model {
 //                         exit;
                      }
                     
-                    $s_date = new DateTime($start_date);
                     $d_date = new DateTime($due_date);
                     $assessments_array = array(
                             'a_name' => clean_title($a_name),
                             'a_description' => $a_description,
                             'a_file_id' => $file_id,
                             'a_file_url' => $file_url,
-                            'a_start_date' => $s_date->getTimestamp(),
                             'a_due_date' => $d_date->getTimestamp(),
                             'lg_id' => $lg_id);
                     $this->db->insert('assessments', $assessments_array);

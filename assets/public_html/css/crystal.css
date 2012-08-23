@@ -906,8 +906,8 @@ ul.checklist li {
 	font-family: Helvetica, Arial, sans-serif;
 	margin-right: 15px;
 	margin-bottom: 15px;
-	color: #767676 !important;
-	text-shadow: 0px 2px 0px rgba(255,255,255,0,9);
+	color: #767676 !important;	
+	/*text-shadow: 0px 1px 0px rgba(255,255,255,0,9);*/
 	font-size: 13px;
 	font-weight: bold;
 
@@ -1166,6 +1166,29 @@ input.search:focus {
 	border: 1px solid #e1e1e1 !important;
 	border-radius: 0px !important;
 
+	-webkit-box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
+	box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
+}
+
+.contact_select {
+	padding: 10px !important;
+	margin: 0px 0px 10px 0px;
+	width: 318px !important;
+	border: 1px solid #e1e1e1 !important;
+	border-radius: 0px !important;
+
+	-webkit-box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
+	box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
+}
+
+.uninoids_date_picker {
+	padding: 10px !important;
+	margin: 0px 9px 10px 0px;
+	width: 100px !important;
+	border: 1px solid #e1e1e1 !important;
+	border-radius: 0px !important;
+        float: left;
+        text-align: center;
 	-webkit-box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
 	box-shadow: inset 0px 5px 2px rgba(0,0,0,0.04);
 }
@@ -1845,7 +1868,9 @@ div.testimonials a.next {
 	margin-bottom: 0px;
 }
 
-.add_comment_form input,.add_comment_form textarea {
+.add_comment_form input[type="text"],
+.add_comment_form input[type="file"],
+.add_comment_form textarea {
 	padding: 15px 20px !important;
 	margin: 0px;
 	width: 276px !important;
@@ -1916,6 +1941,13 @@ div.testimonials a.next {
 	font-size: 16px;
 	margin-bottom: 0px;
 	line-height: 1.3;
+}
+/*Added by Mfawa Alfred Onen for UNINOIDS*/
+.portfolio_item h2.item_title span {
+	/*color: #3f3f3f;*/
+        color: #d86560;
+	font-family: 'Droid Sans', sans-serif;
+	font-size: 14px;
 }
 
 .portfolio_item h2.item_title a {
@@ -3347,6 +3379,14 @@ a.large:link,a.large:visited {
     line-height: 1;
 }
 
+.uninoids_tbl table.un_tbl tbody td {
+    padding: 5px;
+    text-align: left;
+    border-left: 1px solid #E7E7E7;
+    line-height: 16px;
+
+}
+
 .uninoids_tbl table tbody tr:hover {
     background-color: #FAFAFA;
 }
@@ -3373,4 +3413,16 @@ a.small_btn {
 }
 a.small_btn:hover {
     text-decoration: none;
+}
+
+span.required_star {
+    color:#D86560;
+    font-weight: bold;
+}
+
+input[type="text"].uninoids_score_input {
+    padding: 5px !important;
+    margin: 0px;
+    width: 50px !important;
+    /*margin-bottom: 10px;*/
 }

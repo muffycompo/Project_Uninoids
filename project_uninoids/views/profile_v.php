@@ -66,8 +66,7 @@
                                     <?php endif; ?>
 
                                     <div class="clear"></div>
-                                    <button type="submit" class="btn"><span>Update Profile</span></button>
-                                
+                                    <input type="submit" name="submit" value="Update Profile" />
                                  <?php echo form_close(); ?>
 
                         <!-- end: add comment form -->

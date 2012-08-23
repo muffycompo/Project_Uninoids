@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	<title>UNINOIDS</title>
 	<meta name="description" content="Crystal Theme. Adopted for UNINOIDS">
-	<meta name="author" content="Arlind Nushi and Arianit Selimaj. Modified by Project UNINOIDS Team">
+	<meta name="author" content="Arlind Nushi and Arianit Selimaj. Modified and Adopted by UNINOIDS Team">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

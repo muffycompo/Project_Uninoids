@@ -55,7 +55,7 @@ function role_based_dashboard_menu($role_id, $nav = ''){
                                             <li '.$curriculum.'>'.anchor('admin/manage_curriculum','Manage Curriculums').'</li>
                                             <li '.$material.'>'.anchor('admin/manage_sm','Manage Study Materials').'</li>
                                             <li '.$tutor.'>'.anchor('admin/manage_tutors','Manage Tutors').'</li>
-                                            <li '.$stat.'>'.anchor('admin/statistics','UNINOIDS Statistics (Exp)').'</li>
+                                            <!--<li '.$stat.'>'.anchor('admin/statistics','UNINOIDS Statistics (Exp)').'</li>-->
                                             <li>'.anchor('dashboard/logout','Logout').'</li>
 					</ul>';
 				break;	

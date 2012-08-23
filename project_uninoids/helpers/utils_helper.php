@@ -41,7 +41,7 @@ function is_valid_student($student_email){
     }
 }
 
-function curriculum_dropdown($name='lg_curiculum', $tutor_email = '', $selected=NULL){
+function curriculum_dropdown($name='lg_curiculum', $tutor_email = '', $selected=NULL, $extra = ''){
 	$c =& get_instance();
 	
 	if($c->session->userdata('role_id') == 3){
@@ -64,19 +64,19 @@ function curriculum_dropdown($name='lg_curiculum', $tutor_email = '', $selected=
 		    $rs = $c->db->select('curriculum_id,curriculum_name')->where('status', 2)->get('curriculums');
 		}
 	}
-	
+	$options = array('' => 'Select Curriculum');
 	if($rs->num_rows() > 0){
 		foreach($rs->result() as $option){
 			$options[$option->curriculum_id] = $option->curriculum_name;
 		}
-                return form_dropdown($name, $options, $selected);
+                return form_dropdown($name, $options, $selected, $extra);
 	} else {
-            return form_dropdown($name, array('' => 'No Curriculum'), $selected);
+            return form_dropdown($name, $options, $selected, $extra);
         }
 	
 }
 
-function lg_dropdown($name='lg', $tutor_email = '', $selected=NULL){
+function lg_dropdown($name='lg', $tutor_email = '', $selected=NULL, $extra=''){
     $c =& get_instance();
 
     if(!empty($tutor_email)){
@@ -86,13 +86,15 @@ function lg_dropdown($name='lg', $tutor_email = '', $selected=NULL){
     } else {
         $rs = $c->db->select('lg_id,lg_name')->get('learning_groups');
     }
-
+    $options = array('' => 'Select Learning Group');
     if($rs->num_rows() > 0){
         foreach($rs->result() as $option){
             $options[$option->lg_id] = $option->lg_name;
-        }
+        } 
+          return form_dropdown($name, $options, $selected, $extra);  
+    } else {
+          return form_dropdown($name, $options, $selected, $extra);  
     }
-    return form_dropdown($name, $options, $selected);
 }
 
 function student_list($student_list_str){
@@ -101,10 +103,9 @@ function student_list($student_list_str){
     foreach ($student_list as $key => $value) {
         $out_str .= '
                 <tr>
-        			<td style="border: 1px solid #3e3e3e;"><?php  ?>'.expand_tutor_name_from_email(trim(strtolower($value))).'</td>
-        			<td style="border: 1px solid #3e3e3e; text-align: center;">'.strtolower($value).'</td>
-        			<!-- <td style="border: 1px solid #3e3e3e; text-align: center;">Not Graded</td> -->
-        		</tr>
+                    <td>'.expand_tutor_name_from_email(trim(strtolower($value))).'</td>
+                    <td>'.strtolower($value).'</td>
+                </tr>
     	    ';
     }
     return $out_str;
@@ -116,11 +117,11 @@ function student_grade_list($student_list_str, $lg_id){
     foreach ($student_list as $key => $value) {
         $out_str .= '
                 <tr>
-        			<td style="border: 1px solid #3e3e3e;"><?php  ?>'.expand_tutor_name_from_email(trim(strtolower($value))).'</td>
-        			<td style="border: 1px solid #3e3e3e; text-align: center;">'.strtolower($value).'</td>
-        			<td style="border: 1px solid #3e3e3e; text-align: center;">'.form_input('sc_' . format_uri_email(strtolower($value),'@')).' <strong>/ 100</strong></td>
-        			<td style="border: 1px solid #3e3e3e; text-align: center;">'.anchor('tutor/grade_action/edit_score/' .$lg_id . '_' . format_uri_email(strtolower($value),'@'),'Edit Score').'</td>
-        		</tr>
+                    <td>'.expand_tutor_name_from_email(trim(strtolower($value))).'</td>
+                    <td>'.strtolower($value).'</td>
+                    <td>'.form_input('sc_' . format_uri_email(strtolower($value),'@'),'','class="uninoids_score_input"').'</td>
+                    <td>'.anchor('tutor/grade_action/edit_score/' .$lg_id . '_' . format_uri_email(strtolower($value),'@'),'Edit','class="small"').'</td>
+                </tr>
     	    ';
     }
     return $out_str;
@@ -136,7 +137,7 @@ function tutor_email_from_id($tutor_id){
 }
 
 
-function dropdown_datepicker($day='day', $month='month', $year='year'){
+function dropdown_datepicker($day='day', $month='month', $year='year', $extra = ''){
     $options_day = array(
             '01'=>'01',
             '02'=>'02',
@@ -192,7 +193,7 @@ function dropdown_datepicker($day='day', $month='month', $year='year'){
             '2014'=>'2014'
     );
 
-    $calender_dropdown = form_dropdown($day, $options_day) . form_dropdown($month, $options_month) . form_dropdown($year, $options_year);
+    $calender_dropdown = form_dropdown($day, $options_day, NULL, $extra) . form_dropdown($month, $options_month, NULL, $extra) . form_dropdown($year, $options_year, NULL, $extra);
     return $calender_dropdown;
 }
 
@@ -291,7 +292,7 @@ function gplus_social_activities(){
                     } else {
                         try {
                             $optParams = array('maxResults' => 5);
-                            $activities = $plus->activities->listActivities('me', 'public', $optParams);
+                            //$activities = $plus->activities->listActivities('me', 'public', $optParams);
                             if($activities){
                                 // Save to Cache
                                 $c->cache->file->save('gplus_activity_'.$c->session->userdata('user_id'), $activities, $c->config->item('gplus_cache_ttl'));                                                                    
@@ -306,7 +307,7 @@ function gplus_social_activities(){
             try {
                 $twitter_username = $c->Users_m->getTwitterUsername($c->session->userdata('user_id'));
                 $tusername = empty($twitter_username) ? 'googledevs' : $twitter_username;
-                $tweets = $c->twitter->timeline($tusername, 5);
+                //$tweets = $c->twitter->timeline($tusername, 5);
             } catch (Exception $e) {
                 $tweets = '';
             }
