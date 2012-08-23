@@ -12,17 +12,4 @@ Dr. Peter M. Ogedebe (Project Manager)
 
 Mr. Mfawa Alfred Onen (PHP Backend Developer)
 
-Mr. Aderogba Otunla (User Interface/ User Experience/ PHP Developer)
-
-
-*CREDITS:*
-
-Arlind Nushi and Arianit Selimaj (Crystal Theme)
-
-Nelson Bakwa (Intern)
-
-Barka Tatama (Intern)
-
-Ndim Ejor Ndifon
-
-Google API Team at StackOverflow
+Mr. Aderogba Otunla (UIX/Frontend PHP Developer)
