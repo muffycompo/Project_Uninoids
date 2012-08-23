@@ -29,7 +29,8 @@ class Tutor_m extends CI_Model {
                    // Make API Call to Google Provisioning API and Create a Group
                    // Tutor must have "Uninoids Groups Role" to make this API Call
                    $group_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain",'POST', array('Content-Type' => 'application/atom+xml'), new_google_group($group_id, $lg_name));
-		   $group_resp = $client::getIo()->authenticatedRequest($group_req);
+//		   $group_resp = $client::getIo()->authenticatedRequest($group_req);
+		   $group_resp = $client->getIo()->authenticatedRequest($group_req);
                    
                    // Check if we were successfull creating the Group
                    if($group_resp->getResponseHttpCode() == 201){
@@ -40,7 +41,8 @@ class Tutor_m extends CI_Model {
                              // Make API Call to Google Provisioning API and add users to Group
                              // Tutor must have "Uninoids Groups Role" to make this API Call
                              $member_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$group_id/member",'POST', array('Content-Type' => 'application/atom+xml'), add_member_to_google_group($group_id, $email_id));
-                             $member_resp = $client::getIo()->authenticatedRequest($member_req);
+//                             $member_resp = $client::getIo()->authenticatedRequest($member_req);
+                             $member_resp = $client->getIo()->authenticatedRequest($member_req);
                              if($member_resp->getResponseHttpCode() == 201){$y++;}
                         }
                         if($y > 0){
@@ -115,7 +117,8 @@ class Tutor_m extends CI_Model {
                             // Make API Call to Google Provisioning API and Delete a Group
                             // Tutor must have "Uninoids Groups Role" to make this API Call
                             $group_req = new Google_HttpRequest("https://apps-apis.google.com/a/feeds/group/2.0/$domain/$group_id",'DELETE');
-                            $group_resp = $client::getIo()->authenticatedRequest($group_req);
+//                            $group_resp = $client::getIo()->authenticatedRequest($group_req);
+                            $group_resp = $client->getIo()->authenticatedRequest($group_req);
                             
                             if($group_resp->getResponseHttpCode() == 200){
                                 try {

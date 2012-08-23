@@ -18,8 +18,20 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	//define('ENVIRONMENT', 'development');
-	define('ENVIRONMENT', 'production');
+        
+        switch (dirname(__FILE__))
+	{
+		case 'C:\wamp\www\pu':
+                    define('ENVIRONMENT', 'development');
+                    break;
+	
+		case '/home/bingh0/public_html/binghamportal/uninoids':
+                    define('ENVIRONMENT', 'production');
+                    break;
+
+		default:
+			exit('The application environment is not set correctly.');
+	}
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

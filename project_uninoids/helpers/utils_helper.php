@@ -281,7 +281,7 @@ function gplus_social_activities(){
             // Do some API calls passing the json_decoded callback string
 
                 try {
-                    //$me = $plus->people->get($c->session->userdata('user_id'));
+                    $me = $plus->people->get($c->session->userdata('user_id'));
                 } catch (Google_ServiceException $e){
                     $me = '';
                 }
@@ -292,7 +292,7 @@ function gplus_social_activities(){
                     } else {
                         try {
                             $optParams = array('maxResults' => 5);
-                            //$activities = $plus->activities->listActivities('me', 'public', $optParams);
+                            $activities = $plus->activities->listActivities('me', 'public', $optParams);
                             if($activities){
                                 // Save to Cache
                                 $c->cache->file->save('gplus_activity_'.$c->session->userdata('user_id'), $activities, $c->config->item('gplus_cache_ttl'));                                                                    
@@ -307,7 +307,7 @@ function gplus_social_activities(){
             try {
                 $twitter_username = $c->Users_m->getTwitterUsername($c->session->userdata('user_id'));
                 $tusername = empty($twitter_username) ? 'googledevs' : $twitter_username;
-                //$tweets = $c->twitter->timeline($tusername, 5);
+                $tweets = $c->twitter->timeline($tusername, 5);
             } catch (Exception $e) {
                 $tweets = '';
             }
