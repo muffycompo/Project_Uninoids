@@ -118,7 +118,6 @@ CREATE  TABLE IF NOT EXISTS `uninoids`.`assessments` (
   `a_description` VARCHAR(200) CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NULL DEFAULT NULL ,
   `a_file_id` VARCHAR(200) CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NULL DEFAULT NULL ,
   `a_file_url` TEXT CHARACTER SET 'latin1' COLLATE 'latin1_general_ci' NULL DEFAULT NULL ,
-  `a_start_date` BIGINT(20) NULL DEFAULT NULL ,
   `a_due_date` BIGINT(20) NULL DEFAULT NULL ,
   `lg_id` INT(11) NOT NULL ,
   PRIMARY KEY (`a_id`, `lg_id`) ,
