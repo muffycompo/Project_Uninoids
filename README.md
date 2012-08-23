@@ -6,10 +6,3 @@
 
 [http://www.binghamuni.edu.ng/uninoids](http://www.binghamuni.edu.ng/uninoids "Project UNINOIDS")
 
-*UNINOIDS TEAM:*
-
-Dr. Peter M. Ogedebe (Project Manager)
-
-Mr. Mfawa Alfred Onen (PHP Backend Developer)
-
-Mr. Aderogba Otunla (UIX/Frontend PHP Developer)
