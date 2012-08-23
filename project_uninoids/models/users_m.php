@@ -41,12 +41,12 @@ class Users_m extends CI_Model {
 		}
 	}
 	
-	public function updateRefreshToken($user_id, $refresh_token){
+	public function updateRefreshToken($user_id, $refresh_token, $user_picture = ''){
 		if($this->db->select('refresh_token')->from('users')->where('refresh_token', $refresh_token)->get()->num_rows() == 1){
 				return TRUE;
 			} else {
 				
-				$this->db->where('user_id', $user_id)->update('users', array('refresh_token' => $refresh_token));
+				$this->db->where('user_id', $user_id)->update('users', array('refresh_token' => $refresh_token, 'user_image_path' => $user_picture));
 				if($this->db->affected_rows() > 0){return TRUE;} else {return FALSE;}
 			}		
 	}

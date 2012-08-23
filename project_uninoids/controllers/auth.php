@@ -36,7 +36,7 @@ class Auth extends CI_Controller {
 			// Check if User Exist
 			$token_string = json_decode($session_token);
 			if($this->Users_m->verifyUser($user->id)){
-				if($this->Users_m->updateRefreshToken($user->id, $token_string->refresh_token)){
+				if($this->Users_m->updateRefreshToken($user->id, $token_string->refresh_token, $user->picture)){
 					$user_sess = $this->Users_m->getUserDetails($user->id);
 					
 					// Set Session data
