@@ -11,7 +11,7 @@
                     <!-- add comment form -->
                     <div class="cblock empty add_comment_form">
                         
-                        <?php echo form_open('tutor/add_sm',' class="clearfix ajax_contact_form"'); ?>
+                        <?php echo form_open('admin/add_sm',' class="clearfix ajax_contact_form"'); ?>
                         	
                             <div class="twelve columns">
                                 <h1>New Study Material</h1>
