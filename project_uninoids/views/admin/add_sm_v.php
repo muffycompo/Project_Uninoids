@@ -18,7 +18,7 @@
                             </div>
 
                             <div class="twelve columns">
-                                <label>Learning Group Name: <span class="required_star">*</span></label>
+                                <label>Title: <span class="required_star">*</span></label>
                                 <div><?php echo form_input('sm_title',  set_value('sm_title'),'id="sm_title" class="contact_input"  required'); ?></div>	
                                 
                                 <label>Website URL: <span class="required_star">*</span></label>
